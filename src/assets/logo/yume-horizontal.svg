@@ -1,0 +1,62 @@
+<svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Logo Icon -->
+  <circle cx="30" cy="30" r="25" fill="url(#gradient-bg)"/>
+  
+  <!-- Moon Shape -->
+  <path d="M22 18C22 28 16 33 10 33C16 33 22 38 22 48C22 38 28 33 34 33C28 33 22 28 22 18Z" 
+        fill="url(#gradient-moon)" stroke="#ffffff" stroke-width="1.5"/>
+  
+  <!-- Kawaii Eyes -->
+  <ellipse cx="19" cy="25" rx="2" ry="3" fill="#1a1b3a"/>
+  <ellipse cx="25" cy="25" rx="2" ry="3" fill="#1a1b3a"/>
+  
+  <!-- Sparkles -->
+  <g fill="#ff6b9d">
+    <circle cx="40" cy="20" r="1"/>
+    <circle cx="45" cy="25" r="0.8"/>
+    <circle cx="42" cy="15" r="0.6"/>
+  </g>
+  
+  <!-- Text YUME -->
+  <g transform="translate(70, 30)" fill="#1a1b3a" font-family="Poppins, sans-serif" font-weight="600">
+    <!-- Y -->
+    <path d="M0 -15 L8 0 L8 15 M0 -15 L-8 0 L-8 15" stroke="#1a1b3a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    
+    <!-- U -->
+    <path d="M15 -15 L15 5 Q15 15 25 15 Q35 15 35 5 L35 -15" stroke="#1a1b3a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    
+    <!-- M -->
+    <path d="M45 15 L45 -15 L52.5 0 L60 -15 L60 15" stroke="#1a1b3a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    
+    <!-- E -->
+    <path d="M70 -15 L70 15 M70 -15 L85 -15 M70 0 L80 0 M70 15 L85 15" stroke="#1a1b3a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Subtitle -->
+  <text x="72" y="50" fill="#b19cd9" font-family="Inter, sans-serif" font-size="10" font-weight="400">
+    AI Chatbot
+  </text>
+  
+  <!-- Decorative Elements -->
+  <g fill="#d4a5ff" opacity="0.6">
+    <circle cx="165" cy="15" r="1.5"/>
+    <circle cx="175" cy="25" r="1"/>
+    <circle cx="185" cy="20" r="1.2"/>
+  </g>
+  
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="gradient-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5f3ff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#b19cd9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1b3a;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Moon Gradient -->
+    <linearGradient id="gradient-moon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#f5f3ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d4a5ff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>

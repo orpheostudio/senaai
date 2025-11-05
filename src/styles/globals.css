@@ -1,0 +1,644 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  
+  /* Paleta Kawaii Yume - Lavanda, Coral, Pérola */
+  --background: #FAF8FF;
+  --foreground: #4A3B5C;
+  --card: #FFFFFF;
+  --card-foreground: #4A3B5C;
+  --popover: #FFFFFF;
+  --popover-foreground: #4A3B5C;
+  --primary: #B894E8;
+  --primary-foreground: #FFFFFF;
+  --secondary: #FFB3C6;
+  --secondary-foreground: #4A3B5C;
+  --muted: #F5F0FF;
+  --muted-foreground: #9B8BB4;
+  --accent: #FFE5EC;
+  --accent-foreground: #4A3B5C;
+  --destructive: #FF6B9D;
+  --destructive-foreground: #FFFFFF;
+  --border: #E8D5F5;
+  --input: transparent;
+  --input-background: #F9F5FF;
+  --switch-background: #E8D5F5;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: #B894E8;
+  --chart-1: #B894E8;
+  --chart-2: #FFB3C6;
+  --chart-3: #A8E6CF;
+  --chart-4: #FFE5B4;
+  --chart-5: #C5B4E3;
+  --radius: 1rem;
+  --sidebar: #FAF8FF;
+  --sidebar-foreground: #4A3B5C;
+  --sidebar-primary: #B894E8;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F5F0FF;
+  --sidebar-accent-foreground: #4A3B5C;
+  --sidebar-border: #E8D5F5;
+  --sidebar-ring: #B894E8;
+}
+
+.dark {
+  --background: #1A1625;
+  --foreground: #F5F0FF;
+  --card: #2A2035;
+  --card-foreground: #F5F0FF;
+  --popover: #2A2035;
+  --popover-foreground: #F5F0FF;
+  --primary: #D4B2FF;
+  --primary-foreground: #1A1625;
+  --secondary: #FF9EC3;
+  --secondary-foreground: #1A1625;
+  --muted: #2A2035;
+  --muted-foreground: #B894E8;
+  --accent: #3D2A4D;
+  --accent-foreground: #F5F0FF;
+  --border: #3D2A4D;
+  --input: #2A2035;
+  --ring: #D4B2FF;
+}
+
+.high-contrast {
+  --background: #ffffff;
+  --foreground: #000000;
+  --border: #000000;
+  --card: #ffffff;
+  --card-foreground: #000000;
+  --primary: #6B00B3;
+  --secondary: #ffffff;
+}
+
+.dark.high-contrast {
+  --background: #000000;
+  --foreground: #ffffff;
+  --border: #ffffff;
+  --card: #000000;
+  --card-foreground: #ffffff;
+  --primary: #D4B2FF;
+  --secondary: #000000;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Melhorias de Acessibilidade */
+  *:focus {
+    outline: 3px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  /* Animações reduzidas */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Melhor foco para navegação por teclado */
+  .keyboard-navigation *:focus {
+    outline: 4px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Leitores de tela */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .sr-only:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0.5rem 1rem;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    z-index: 9999;
+    border-radius: var(--radius);
+  }
+
+  /* Botões grandes para acessibilidade */
+  .large-click-targets button {
+    min-height: 48px;
+    min-width: 48px;
+    padding: 12px 16px;
+  }
+}
+
+/**
+ * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
+ */
+@layer base {
+  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
+    h1 {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h2 {
+      font-size: var(--text-xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h3 {
+      font-size: var(--text-lg);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h4 {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    p {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+
+    label {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    button {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    input {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+  }
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+/* ===== ESTILOS KAWAII YUME ===== */
+
+body {
+  @apply bg-background text-foreground;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container principal com gradiente kawaii */
+.chat-container {
+  @apply flex flex-col w-full h-screen;
+  max-width: 100vw;
+  background: linear-gradient(135deg, #FAF8FF 0%, #FFF5F8 50%, #F5F0FF 100%);
+  position: relative;
+}
+
+.dark .chat-container {
+  background: linear-gradient(135deg, #1A1625 0%, #221933 50%, #1A1625 100%);
+}
+
+/* Decoração kawaii de fundo */
+.chat-container::before {
+  content: "✨💜🌸✨💜🌸✨💜🌸";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Área de mensagens */
+.chat-messages {
+  @apply flex-1 overflow-y-auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) transparent;
+}
+
+.chat-messages::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
+  border-radius: 10px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Container interno das mensagens */
+.messages-container {
+  @apply max-w-3xl mx-auto px-4 py-6 space-y-6;
+  position: relative;
+  z-index: 1;
+}
+
+/* Bolhas de mensagens kawaii */
+.message {
+  @apply w-full;
+  line-height: 1.6;
+  animation: messageSlideIn 0.3s ease-out;
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mensagem do bot (Yume) */
+.message-bot {
+  @apply w-full;
+}
+
+.message-bot .message-content {
+  @apply bg-white/80 backdrop-blur-sm rounded-3xl px-5 py-4 shadow-lg;
+  border: 2px solid var(--border);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(245, 240, 255, 0.9) 100%);
+  color: var(--foreground);
+  box-shadow: 0 4px 20px rgba(184, 148, 232, 0.15);
+}
+
+.dark .message-bot .message-content {
+  background: linear-gradient(135deg, rgba(42, 32, 53, 0.9) 0%, rgba(61, 42, 77, 0.9) 100%);
+  border-color: var(--border);
+  box-shadow: 0 4px 20px rgba(212, 178, 255, 0.1);
+}
+
+/* Mensagem do usuário */
+.message-user {
+  @apply w-full flex justify-end;
+}
+
+.message-user .message-content {
+  @apply rounded-3xl px-5 py-4 max-w-[80%] shadow-lg;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 20px rgba(184, 148, 232, 0.25);
+}
+
+.message-user .message-sender {
+  @apply justify-end;
+  text-align: right;
+}
+
+.message-user .message-controls {
+  @apply justify-end;
+}
+
+/* Área de input fixa com estilo kawaii */
+.chat-input {
+  @apply border-t-2 bg-white/80 px-4 py-4;
+  border-color: var(--border);
+  position: sticky;
+  bottom: 0;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 -4px 20px rgba(184, 148, 232, 0.1);
+  z-index: 10;
+}
+
+.dark .chat-input {
+  background: rgba(26, 22, 37, 0.9);
+  box-shadow: 0 -4px 20px rgba(212, 178, 255, 0.05);
+}
+
+.chat-input-container {
+  @apply max-w-3xl mx-auto;
+}
+
+.chat-input textarea {
+  @apply w-full resize-none rounded-2xl px-4 py-3;
+  background: var(--input-background);
+  color: var(--foreground);
+  font-size: var(--text-base);
+  line-height: 1.5;
+  outline: none;
+  border: 2px solid var(--border);
+  transition: all 0.3s ease;
+  min-height: 60px;
+  max-height: 200px;
+  box-shadow: 0 2px 10px rgba(184, 148, 232, 0.1);
+}
+
+.chat-input textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 4px 20px rgba(184, 148, 232, 0.2);
+  transform: translateY(-2px);
+}
+
+.chat-input button {
+  @apply rounded-2xl font-medium transition-all duration-300;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(184, 148, 232, 0.3);
+}
+
+.chat-input button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(184, 148, 232, 0.4);
+}
+
+.chat-input button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.chat-input button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Cabeçalho kawaii com gradiente */
+.chat-header {
+  @apply flex items-center justify-between px-4 py-4;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 245, 248, 0.95) 100%);
+  border-bottom: 2px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(184, 148, 232, 0.1);
+}
+
+.dark .chat-header {
+  background: linear-gradient(135deg, rgba(26, 22, 37, 0.95) 0%, rgba(34, 25, 51, 0.95) 100%);
+  box-shadow: 0 4px 20px rgba(212, 178, 255, 0.05);
+}
+
+.chat-header h1 {
+  @apply font-medium;
+  font-size: 1.25rem;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Avatar kawaii com gradiente */
+.message-avatar {
+  @apply h-10 w-10 rounded-full flex items-center justify-center flex-shrink-0 mb-2 overflow-hidden;
+  box-shadow: 0 4px 15px rgba(184, 148, 232, 0.2);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  background: linear-gradient(white, white) padding-box,
+              linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%) border-box;
+}
+
+.message-avatar:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.message-avatar.bot {
+  animation: float 3s ease-in-out infinite;
+}
+
+.message-avatar.bot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.message-avatar.user {
+  @apply bg-muted;
+  color: var(--muted-foreground);
+}
+
+/* Nome do remetente */
+.message-sender {
+  @apply text-sm font-medium mb-2 flex items-center gap-2;
+  color: var(--muted-foreground);
+}
+
+/* Conteúdo da mensagem */
+.message-text {
+  @apply leading-relaxed whitespace-pre-wrap;
+}
+
+/* Controles da mensagem com transição suave */
+.message-controls {
+  @apply flex items-center gap-2 mt-3 opacity-0 transition-all duration-300;
+}
+
+.message:hover .message-controls {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+/* Indicador de digitação kawaii */
+.typing-indicator {
+  @apply flex items-center gap-2;
+  color: var(--muted-foreground);
+}
+
+.typing-dots {
+  @apply flex gap-1;
+}
+
+.typing-dot {
+  @apply w-2 h-2 rounded-full;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  animation: bounce 1.4s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+  0%, 80%, 100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Botões kawaii com gradiente */
+button {
+  transition: all 0.3s ease;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Quick Actions com estilo kawaii */
+.quick-action-button {
+  @apply rounded-2xl p-4 transition-all duration-300;
+  background: white;
+  border: 2px solid var(--border);
+  box-shadow: 0 2px 15px rgba(184, 148, 232, 0.1);
+}
+
+.quick-action-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 25px rgba(184, 148, 232, 0.2);
+  border-color: var(--primary);
+}
+
+.dark .quick-action-button {
+  background: var(--card);
+  box-shadow: 0 2px 15px rgba(212, 178, 255, 0.05);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .chat-container {
+    height: 100vh;
+    height: 100dvh;
+  }
+  
+  .messages-container {
+    @apply px-3 py-4 space-y-4;
+  }
+  
+  .chat-input {
+    @apply px-3 py-3;
+  }
+  
+  .chat-header {
+    @apply px-3 py-3;
+  }
+  
+  .message-user .message-content {
+    @apply max-w-[90%];
+  }
+}
+
+/* Efeitos de partículas decorativas */
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Sombras kawaii suaves */
+.kawaii-shadow {
+  box-shadow: 0 4px 20px rgba(184, 148, 232, 0.15);
+}
+
+/* Gradientes kawaii */
+.gradient-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

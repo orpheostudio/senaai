@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Sena - Assistente Digital Kawaii Acessível</title>
+    <meta name="description" content="Sena é uma assistente digital kawaii especializada em ajudar pessoas 60+ e com dificuldades tecnológicas de forma simples e acessível">
+    <meta name="keywords" content="assistente digital, acessibilidade, idosos, tecnologia, chatbot, kawaii">
+    <meta name="author" content="Orpheo Studio">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://seu-usuario.github.io/sena/">
+    <meta property="og:title" content="Sena - Assistente Digital Kawaii">
+    <meta property="og:description" content="Assistente digital kawaii e acessível para todos">
+    <meta property="og:image" content="https://i.imgur.com/Dc3f5ZQ.jpeg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://seu-usuario.github.io/sena/">
+    <meta property="twitter:title" content="Sena - Assistente Digital Kawaii">
+    <meta property="twitter:description" content="Assistente digital kawaii e acessível para todos">
+    <meta property="twitter:image" content="https://i.imgur.com/Dc3f5ZQ.jpeg">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#B894E8">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Sena">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://i.imgur.com/Dc3f5ZQ.jpeg">
+    <link rel="apple-touch-icon" href="https://i.imgur.com/Dc3f5ZQ.jpeg">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "YOUR_CLARITY_PROJECT_ID");
+    </script>
+    
+    <script type="module" crossorigin src="/assets/index.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index.css">
+</head>
+<body>
+    <div id="root"></div>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('✨ Service Worker registrado com sucesso:', registration.scope);
+                        
+                        // Check for updates
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    // New service worker available, prompt user to refresh
+                                    if (confirm('Nova versão da Sena disponível! Deseja atualizar?')) {
+                                        window.location.reload();
+                                    }
+                                }
+                            });
+                        });
+                    })
+                    .catch(error => {
+                        console.log('Erro ao registrar Service Worker:', error);
+                    });
+            });
+        }
+        
+        // PWA Install Prompt
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Show install button after user interaction
+            setTimeout(() => {
+                if (deferredPrompt && !window.matchMedia('(display-mode: standalone)').matches) {
+                    const installPrompt = confirm('Instalar Sena como aplicativo no seu dispositivo?');
+                    if (installPrompt) {
+                        deferredPrompt.prompt();
+                        deferredPrompt.userChoice.then((choiceResult) => {
+                            if (choiceResult.outcome === 'accepted') {
+                                console.log('Usuário aceitou instalar a PWA');
+                            }
+                            deferredPrompt = null;
+                        });
+                    }
+                }
+            }, 3000);
+        });
+        
+        // Detect if app is running as PWA
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.matchMedia('(display-mode: standalone)').matches) {
+                console.log('💜 Sena está rodando como PWA!');
+            }
+        });
+    </script>
+</body>
+</html>

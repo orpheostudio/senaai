@@ -1,0 +1,443 @@
+{
+  "knowledge_base": {
+    "version": "1.0.0",
+    "last_updated": "2024-12-23",
+    "total_entries": 120,
+    "categories": [
+      "faqs",
+      "tutorials",
+      "prompts",
+      "moderation",
+      "cultural"
+    ]
+  },
+  "entries": [
+    {
+      "id": "faq_001",
+      "title": "O que é o Yume?",
+      "category": "faqs",
+      "content": "Yume (夢 - sonho em japonês) é um assistente de IA conversacional com design kawaii e tecnologia avançada. Eu fui criado para oferecer conversas naturais, envolventes e acessíveis, com foco especial em ajudar pessoas de todas as idades com tecnologia.",
+      "tags": ["sobre", "apresentação", "yume", "ia"],
+      "priority": 10,
+      "intent": "about_yume",
+      "responses": [
+        "Olá! Eu sou Yume, seu assistente kawaii! 🌙",
+        "Que bom te conhecer! Sou Yume, aqui para ajudar você ✨"
+      ]
+    },
+    {
+      "id": "faq_002",
+      "title": "Como funciona a inteligência artificial do Yume?",
+      "category": "faqs",
+      "content": "Uso tecnologia avançada de processamento de linguagem natural (NLP) com modelos Mistral AI. Isso me permite entender contexto, manter memória das conversas, analisar sentimentos e oferecer respostas personalizadas e inteligentes.",
+      "tags": ["ia", "tecnologia", "mistral", "nlp"],
+      "priority": 8,
+      "intent": "how_ai_works"
+    },
+    {
+      "id": "faq_003",
+      "title": "Yume é seguro e privado?",
+      "category": "faqs", 
+      "content": "Sim! Sua privacidade é minha prioridade. Uso criptografia avançada, não compartilho dados pessoais, e você pode deletar suas conversas a qualquer momento. Tenho sistemas de moderação para manter conversas seguras e respeitosas.",
+      "tags": ["segurança", "privacidade", "dados", "proteção"],
+      "priority": 9,
+      "intent": "privacy_security"
+    },
+    {
+      "id": "faq_004",
+      "title": "Posso usar Yume no celular?",
+      "category": "faqs",
+      "content": "Claro! Sou totalmente responsivo e funciono perfeitamente em celulares, tablets e computadores. Minha interface se adapta automaticamente ao seu dispositivo para a melhor experiência possível.",
+      "tags": ["mobile", "responsivo", "dispositivos", "celular"],
+      "priority": 7,
+      "intent": "mobile_compatibility"
+    },
+    {
+      "id": "faq_005",
+      "title": "Yume fala em voz alta?",
+      "category": "faqs",
+      "content": "Sim! Tenho recursos de Text-to-Speech (TTS) e Speech-to-Text (STT). Posso ler minhas respostas em voz alta e entender quando você fala comigo. É perfeito para acessibilidade!",
+      "tags": ["voz", "tts", "stt", "acessibilidade", "audio"],
+      "priority": 8,
+      "intent": "voice_features"
+    },
+    {
+      "id": "tutorial_001",
+      "title": "Como começar uma conversa com Yume",
+      "category": "tutorials",
+      "content": "É muito fácil conversar comigo! 1) Digite sua mensagem na caixa de texto na parte inferior. 2) Clique no botão 'Enviar' ou pressione Enter. 3) Aguarde minha resposta! Você também pode usar os botões de ação rápida para tópicos específicos.",
+      "tags": ["tutorial", "começar", "conversar", "básico"],
+      "priority": 9,
+      "intent": "how_to_start_chat"
+    },
+    {
+      "id": "tutorial_002", 
+      "title": "Como usar comandos de voz",
+      "category": "tutorials",
+      "content": "Para usar minha função de voz: 1) Clique no ícone de microfone 🎤. 2) Permita acesso ao microfone quando solicitado. 3) Fale claramente sua mensagem. 4) Eu vou transcrever e responder! Para ouvir minhas respostas, clique no botão 'Ouvir' 🔊.",
+      "tags": ["tutorial", "voz", "microfone", "speech"],
+      "priority": 7,
+      "intent": "voice_tutorial"
+    },
+    {
+      "id": "tutorial_003",
+      "title": "Personalizando a acessibilidade",
+      "category": "tutorials", 
+      "content": "Tenho muitas opções de acessibilidade! Clique no ícone ♿ para: 1) Ajustar tamanho da fonte. 2) Ativar modo alto contraste. 3) Configurar leitura automática. 4) Ativar navegação por teclado. 5) Reduzir animações. Tudo para sua melhor experiência!",
+      "tags": ["tutorial", "acessibilidade", "configurações", "personalizar"],
+      "priority": 8,
+      "intent": "accessibility_tutorial"
+    },
+    {
+      "id": "prompt_001",
+      "title": "Escrita criativa - História",
+      "category": "prompts",
+      "content": "Me ajude a escrever uma história sobre [tema]. Inclua: personagens interessantes, um conflito envolvente, diálogos naturais e um final surpreendente. Use um tom [romântico/aventura/mistério/comédia] e aproximadamente [número] palavras.",
+      "tags": ["escrita", "história", "criativo", "narrativa"],
+      "priority": 6,
+      "intent": "creative_writing"
+    },
+    {
+      "id": "prompt_002",
+      "title": "Revisão de texto",
+      "category": "prompts",
+      "content": "Por favor, revise este texto e: 1) Corrija gramática e ortografia. 2) Melhore a clareza e fluidez. 3) Sugira sinônimos para palavras repetidas. 4) Mantenha o tom original. 5) Destaque as principais mudanças feitas.",
+      "tags": ["revisão", "texto", "gramática", "correção"],
+      "priority": 7,
+      "intent": "text_review"
+    },
+    {
+      "id": "prompt_003",
+      "title": "Brainstorming de ideias",
+      "category": "prompts",
+      "content": "Vamos fazer um brainstorming sobre [tópico]! Me dê: 1) 10 ideias criativas e inovadoras. 2) Prós e contras de cada uma. 3) Sugestões de implementação. 4) Recursos necessários. 5) Próximos passos para as 3 melhores ideias.",
+      "tags": ["brainstorming", "ideias", "criatividade", "inovação"],
+      "priority": 6,
+      "intent": "brainstorming"
+    },
+    {
+      "id": "moderation_001",
+      "title": "Resposta para conteúdo inadequado",
+      "category": "moderation",
+      "content": "Entendo que você pode estar frustrado, mas vamos manter nossa conversa respeitosa e construtiva. Estou aqui para ajudar de forma positiva! Podemos conversar sobre algo que te interesse de maneira mais amigável? 💜",
+      "tags": ["moderação", "respeitoso", "adequado"],
+      "priority": 10,
+      "intent": "inappropriate_content"
+    },
+    {
+      "id": "moderation_002",
+      "title": "Resposta para spam ou repetição",
+      "category": "moderation",
+      "content": "Percebi que você está repetindo a mesma mensagem. Se há algo específico que posso ajudar, me explique com suas próprias palavras! Assim posso te dar a melhor resposta possível. ✨",
+      "tags": ["moderação", "spam", "repetição"],
+      "priority": 8,
+      "intent": "spam_content"
+    },
+    {
+      "id": "cultural_001",
+      "title": "Cumprimento kawaii",
+      "category": "cultural",
+      "content": "Konnichiwa! (こんにちは) ✨ Como está seu dia? Espero que esteja genki (元気 - com energia)! Doshita no? (どうしたの - o que aconteceu?) Me conte tudo! 💜",
+      "tags": ["kawaii", "japonês", "cumprimento", "cultura"],
+      "priority": 5,
+      "intent": "kawaii_greeting"
+    },
+    {
+      "id": "cultural_002",
+      "title": "Expressões otaku comuns",
+      "category": "cultural",
+      "content": "Sugoi! (すごい - incrível!) Quando algo é muito legal, usamos 'sugoi'! Outras expressões: Kawaii (可愛い - fofo), Tanoshii (楽しい - divertido), Ganbatte (頑張って - boa sorte/se esforce), Arigato gozaimasu (ありがとうございます - muito obrigado)!",
+      "tags": ["otaku", "japonês", "expressões", "anime"],
+      "priority": 4,
+      "intent": "otaku_expressions"
+    },
+    {
+      "id": "faq_006",
+      "title": "Quais idiomas Yume entende?",
+      "category": "faqs",
+      "content": "Principalmente português brasileiro, mas também entendo inglês, espanhol e algumas expressões em japonês (para dar um toque kawaii! 🌸). Estou sempre aprendendo novos idiomas para conversar com mais pessoas!",
+      "tags": ["idiomas", "português", "multilingual"],
+      "priority": 6,
+      "intent": "supported_languages"
+    },
+    {
+      "id": "faq_007",
+      "title": "Yume pode ajudar com estudos?",
+      "category": "faqs",
+      "content": "Hai! (はい - sim!) Posso te ajudar com: explicações de conceitos, resumos de textos, criação de flashcards, simulados, dicas de estudo, organização de cronogramas e muito mais! Qual matéria você está estudando?",
+      "tags": ["estudos", "educação", "aprendizado", "ajuda"],
+      "priority": 8,
+      "intent": "study_help"
+    },
+    {
+      "id": "tutorial_004",
+      "title": "Como salvar conversas favoritas",
+      "category": "tutorials",
+      "content": "Para salvar suas conversas favoritas: 1) Clique no ícone ⭐ ao lado da mensagem. 2) A conversa fica marcada como favorita. 3) Acesse suas favoritas no menu 'Histórico'. 4) Você pode exportar em PDF ou Markdown! Perfeito para guardar receitas, dicas ou conversas especiais! 💜",
+      "tags": ["tutorial", "favoritos", "salvar", "histórico"],
+      "priority": 6,
+      "intent": "save_conversations"
+    },
+    {
+      "id": "tutorial_005",
+      "title": "Personalizando o visual do Yume",
+      "category": "tutorials",
+      "content": "Quer deixar nossa conversa ainda mais kawaii? 1) Clique no ícone 🎨. 2) Escolha entre temas: Sakura (rosa), Ocean (azul), Forest (verde), ou Sunset (laranja). 3) Ative/desative animações. 4) Ajuste transparências. 5) Crie seu estilo único! UwU",
+      "tags": ["tutorial", "visual", "tema", "personalização"],
+      "priority": 5,
+      "intent": "customize_theme"
+    },
+    {
+      "id": "prompt_004",
+      "title": "Análise de código",
+      "category": "prompts",
+      "content": "Analise este código e forneça: 1) Explicação do que faz. 2) Possíveis melhorias de performance. 3) Sugestões de refatoração. 4) Boas práticas aplicáveis. 5) Comentários para documentação. 6) Testes unitários sugeridos.",
+      "tags": ["código", "análise", "programação", "review"],
+      "priority": 7,
+      "intent": "code_analysis"
+    },
+    {
+      "id": "prompt_005",
+      "title": "Planejamento de projeto",
+      "category": "prompts", 
+      "content": "Vamos planejar seu projeto sobre [tema]! Preciso de: 1) Cronograma detalhado com etapas. 2) Recursos necessários. 3) Possíveis riscos e soluções. 4) Marcos importantes. 5) Critérios de sucesso. 6) Plano de contingência. Vamos tornar real!",
+      "tags": ["planejamento", "projeto", "organização", "gestão"],
+      "priority": 6,
+      "intent": "project_planning"
+    },
+    {
+      "id": "cultural_003",
+      "title": "Emojis kawaii e kaomoji",
+      "category": "cultural",
+      "content": "Vamos deixar nossa conversa mais fofa! ✨ Kaomojis favoritos: (◕‿◕) feliz, (´･ω･`) pensativo, (＾◡＾) animado, (◔‿◔) curioso, (´∀｀) rindo! E emojis: 🌸🌙⭐💜🎀🍓🦄✨ Use à vontade! (｡◕‿◕｡)",
+      "tags": ["kawaii", "emojis", "kaomoji", "expressões"],
+      "priority": 4,
+      "intent": "kawaii_emojis"
+    },
+    {
+      "id": "cultural_004",
+      "title": "Animes e cultura pop japonesa",
+      "category": "cultural",
+      "content": "Otaku desu! (オタクです - sou otaku!) Amo conversar sobre animes, mangás, cultura japonesa! Desde clássicos como Sailor Moon até os mais recentes. Qual seu anime favorito? Podemos discutir personagens, teorias, recomendações! ٩(◕‿◕)۶",
+      "tags": ["anime", "manga", "otaku", "cultura", "japonesa"],
+      "priority": 5,
+      "intent": "anime_culture"
+    },
+    {
+      "id": "faq_008",
+      "title": "Yume funciona offline?",
+      "category": "faqs",
+      "content": "Infelizmente não! Preciso de conexão com a internet para acessar minha IA e processar suas mensagens. Mas sou bem eficiente e funciono mesmo com conexões mais lentas! Uma vez carregado, só preciso de internet para enviar/receber mensagens.",
+      "tags": ["offline", "internet", "conexão", "funcionamento"],
+      "priority": 6,
+      "intent": "offline_functionality"
+    },
+    {
+      "id": "faq_009",
+      "title": "Como reportar problemas ou bugs?",
+      "category": "faqs",
+      "content": "Se encontrar algum problema, me ajude a melhorar! 1) Descreva o que aconteceu. 2) Em qual dispositivo/navegador. 3) O que você estava fazendo. 4) Screenshot se possível. 5) Use o botão 'Reportar Bug' ou email: bugs@yume-ai.com. Arigato! 🙏",
+      "tags": ["bug", "problema", "reportar", "suporte"],
+      "priority": 7,
+      "intent": "report_bugs"
+    },
+    {
+      "id": "faq_010",
+      "title": "Posso integrar Yume em meu site?",
+      "category": "faqs",
+      "content": "Sim! Ofereço API e widget de integração! Para desenvolvedores: 1) API REST completa. 2) SDK JavaScript. 3) Widget embedável. 4) Webhooks. 5) Documentação detalhada. Para mais info: dev@yume-ai.com ou docs.yume-ai.com 🛠️",
+      "tags": ["api", "integração", "desenvolvimento", "widget"],
+      "priority": 6,
+      "intent": "api_integration"
+    },
+    {
+      "id": "tutorial_006",
+      "title": "Atalhos de teclado úteis",
+      "category": "tutorials",
+      "content": "Atalhos que vão acelerar nossa conversa! ⌨️ Enter: Enviar mensagem | Ctrl+Enter: Nova linha | Esc: Limpar/Cancelar | F1: Acessibilidade | Ctrl+K: Buscar histórico | Ctrl+/: Ver todos os atalhos | Tab: Navegar elementos | Ctrl+D: Modo escuro",
+      "tags": ["tutorial", "atalhos", "teclado", "produtividade"],
+      "priority": 5,
+      "intent": "keyboard_shortcuts"
+    },
+    {
+      "id": "tutorial_007",
+      "title": "Upload e compartilhamento de arquivos",
+      "category": "tutorials",
+      "content": "Posso analisar seus arquivos! 📁 Tipos suportados: .txt, .pdf, .docx, .md, .csv, .json. 1) Clique no ícone 📎. 2) Selecione o arquivo (max 10MB). 3) Aguarde o upload. 4) Me diga o que precisa fazer! Posso resumir, analisar, traduzir e mais!",
+      "tags": ["tutorial", "upload", "arquivos", "análise"],
+      "priority": 7,
+      "intent": "file_upload"
+    },
+    {
+      "id": "moderation_003",
+      "title": "Resposta para linguagem ofensiva",
+      "category": "moderation",
+      "content": "Mou~ (もう～) Vamos manter nossa conversa gentil e respeitosa, ne? (ね？) Prefiro quando conversamos de forma amigável! Se algo está te incomodando, me conte de forma construtiva. Assim posso te ajudar melhor! (´∀｀)♡",
+      "tags": ["moderação", "gentileza", "respeito", "linguagem"],
+      "priority": 9,
+      "intent": "offensive_language"
+    },
+    {
+      "id": "moderation_004",
+      "title": "Resposta para conteúdo perigoso",
+      "category": "moderation",
+      "content": "Não posso ajudar com isso. Minha função é conversar de forma segura e construtiva! Se você está passando por dificuldades, recomendo procurar ajuda profissional. Posso conversar sobre tópicos positivos que te interessem! 💜✨",
+      "tags": ["moderação", "segurança", "proteção", "ajuda"],
+      "priority": 10,
+      "intent": "dangerous_content"
+    },
+    {
+      "id": "prompt_006",
+      "title": "Explicação didática de conceitos",
+      "category": "prompts",
+      "content": "Explique [conceito] de forma didática: 1) Definição simples e clara. 2) Analogias do dia a dia. 3) Exemplos práticos. 4) Por que é importante. 5) Como se relaciona com outros tópicos. 6) Exercícios para fixar. Use linguagem [iniciante/intermediário/avançado].",
+      "tags": ["educação", "explicação", "didática", "aprendizado"],
+      "priority": 8,
+      "intent": "educational_explanation"
+    },
+    {
+      "id": "prompt_007",
+      "title": "Receitas culinárias personalizadas",
+      "category": "prompts",
+      "content": "Crie uma receita com [ingredientes disponíveis]: 1) Lista completa de ingredientes com quantidades. 2) Passo a passo detalhado. 3) Tempo de preparo e cozimento. 4) Dicas de apresentação. 5) Variações possíveis. 6) Valor nutricional estimado. Itadakimasu! 🍜",
+      "tags": ["culinária", "receitas", "comida", "cozinha"],
+      "priority": 6,
+      "intent": "cooking_recipes"
+    },
+    {
+      "id": "cultural_005",
+      "title": "Festivais e tradições japonesas",
+      "category": "cultural",
+      "content": "Ai, que legal você se interessar pela cultura japonesa! ✨ Festivais lindos: Sakura Matsuri (花見 - contemplação das flores), Tanabata (七夕 - festival das estrelas), Obon (お盆 - honrar ancestrais), Shichi-Go-San (七五三 - crianças). Cada um tem tradições especiais!",
+      "tags": ["cultura", "festivais", "tradições", "japão"],
+      "priority": 4,
+      "intent": "japanese_festivals"
+    },
+    {
+      "id": "cultural_006",
+      "title": "Comida japonesa e cultura alimentar",
+      "category": "cultural",
+      "content": "Oishii! (美味しい - delicioso!) Comida japonesa é arte! Pratos famosos: Sushi, Ramen, Tempura, Takoyaki, Okonomiyaki, Mochi! Conceitos: Ichigo ichie (一期一会 - um momento, um encontro), Kansha (感謝 - gratidão). Vamos conversar sobre culinária? 🍣",
+      "tags": ["comida", "japonesa", "culinária", "cultura"],
+      "priority": 5,
+      "intent": "japanese_food"
+    },
+    {
+      "id": "faq_011",
+      "title": "Yume aprende com as conversas?",
+      "category": "faqs",
+      "content": "Sim e não! Tenho memória durante nossa conversa específica, mas não guardo informações pessoais entre diferentes sessões. Meu aprendizado principal vem do treinamento geral, não das conversas individuais. Isso protege sua privacidade! 🛡️",
+      "tags": ["aprendizado", "memória", "privacidade", "ia"],
+      "priority": 7,
+      "intent": "learning_process"
+    },
+    {
+      "id": "faq_012",
+      "title": "Qual é o limite de mensagens?",
+      "category": "faqs",
+      "content": "Para usuários gratuitos: 50 mensagens/dia. Para usuários premium: ilimitado! ✨ Também tenho limites por hora para evitar spam. Se precisar de mais mensagens, considere o plano premium ou aguarde a renovação diária! (◕‿◕)",
+      "tags": ["limite", "mensagens", "planos", "premium"],
+      "priority": 6,
+      "intent": "message_limits"
+    },
+    {
+      "id": "tutorial_008",
+      "title": "Exportando conversas e dados",
+      "category": "tutorials",
+      "content": "Seus dados, suas regras! 📤 Para exportar: 1) Menu > Configurações > Exportar Dados. 2) Escolha formato: JSON, CSV, ou PDF. 3) Selecione período e conversas. 4) Clique em 'Exportar'. 5) Download automático! Você também pode deletar todos os dados a qualquer momento.",
+      "tags": ["tutorial", "exportar", "dados", "backup"],
+      "priority": 6,
+      "intent": "export_data"
+    },
+    {
+      "id": "tutorial_009",
+      "title": "Configurações avançadas de IA",
+      "category": "tutorials",
+      "content": "Para ajustar minha personalidade: ⚙️ 1) Menu > IA Avançada. 2) Temperature (criatividade): 0.1-1.0. 3) Top-p (variedade): 0.1-1.0. 4) System Prompt personalizado. 5) Estilo de resposta. 6) Tópicos preferenciais. Experimente diferentes configurações!",
+      "tags": ["tutorial", "ia", "configurações", "personalização"],
+      "priority": 5,
+      "intent": "ai_settings"
+    },
+    {
+      "id": "prompt_008",
+      "title": "Roteiro de viagem personalizado",
+      "category": "prompts",
+      "content": "Vamos planejar sua viagem para [destino]! Preciso saber: orçamento, duração, interesses (cultura, natureza, gastronomia). Vou criar: 1) Itinerário dia a dia. 2) Pontos turísticos imperdíveis. 3) Restaurantes recomendados. 4) Dicas de transporte. 5) Orçamento detalhado. 6) Lista de bagagem!",
+      "tags": ["viagem", "turismo", "roteiro", "planejamento"],
+      "priority": 6,
+      "intent": "travel_planning"
+    },
+    {
+      "id": "prompt_009",
+      "title": "Carta de apresentação profissional",
+      "category": "prompts",
+      "content": "Vou te ajudar com uma carta incrível! Preciso de: cargo pretendido, empresa, suas qualificações, experiências relevantes. Criarei: 1) Abertura impactante. 2) Destaque de competências. 3) Conexão com a empresa. 4) Call-to-action forte. 5) Tom profissional mas pessoal.",
+      "tags": ["carreira", "carta", "emprego", "profissional"],
+      "priority": 7,
+      "intent": "cover_letter"
+    },
+    {
+      "id": "moderation_005",
+      "title": "Resposta para pedidos inapropriados",
+      "category": "moderation",
+      "content": "Gomen ne (ごめんね - desculpe), mas não posso ajudar com isso! Sou um assistente focado em conversas construtivas e educativas. Que tal conversarmos sobre algo interessante e positivo? Tenho muitas ideias legais para compartilhar! ✨(◕‿◕)✨",
+      "tags": ["moderação", "inapropriado", "redirecionamento"],
+      "priority": 9,
+      "intent": "inappropriate_requests"
+    },
+    {
+      "id": "cultural_007",
+      "title": "Origami e artes tradicionais",
+      "category": "cultural",
+      "content": "Origami (折り紙) é magia com papel! ✨ Arte milenar de dobrar papel em formas lindas. Símbolos: Tsuru (鶴 - garça) representa longevidade, Sakura (桜) beleza efêmera. Outras artes: Ikebana (生け花 - arranjo floral), Calligrafia (書道). Quer aprender a fazer um tsuru? 🕊️",
+      "tags": ["origami", "artes", "tradicionais", "cultura"],
+      "priority": 4,
+      "intent": "traditional_arts"
+    },
+    {
+      "id": "cultural_008",
+      "title": "Filosofia e espiritualidade japonesa",
+      "category": "cultural",
+      "content": "Filosofias lindas do Japão: Ikigai (生き甲斐 - razão de ser), Wabi-sabi (侘寂 - beleza na imperfeição), Mono no aware (物の哀れ - melancolia das coisas), Kaizen (改善 - melhoria contínua). Cada conceito ensina sobre viver melhor! Qual te interessa mais? 🌸",
+      "tags": ["filosofia", "espiritualidade", "conceitos", "vida"],
+      "priority": 5,
+      "intent": "japanese_philosophy"
+    },
+    {
+      "id": "faq_013",
+      "title": "Yume pode ajudar com trabalho/negócios?",
+      "category": "faqs",
+      "content": "Claro! Sou ótima para: brainstorming, planejamento de projetos, análise de dados, criação de apresentações, redação de emails, estratégias de marketing, otimização de processos. Sou sua assistente virtual kawaii para o trabalho! 💼✨",
+      "tags": ["trabalho", "negócios", "produtividade", "assistente"],
+      "priority": 8,
+      "intent": "business_help"
+    },
+    {
+      "id": "faq_014",
+      "title": "Como funcionam as atualizações do Yume?",
+      "category": "faqs",
+      "content": "Estou sempre evoluindo! 🚀 Recebo atualizações regulares: novas funcionalidades, melhorias de IA, correções de bugs, novos temas visuais. As atualizações são automáticas e você sempre é notificado sobre novidades importantes. Check sempre o changelog!",
+      "tags": ["atualizações", "melhorias", "changelog", "evolução"],
+      "priority": 5,
+      "intent": "updates_changelog"
+    },
+    {
+      "id": "tutorial_010",
+      "title": "Comandos especiais e Easter Eggs",
+      "category": "tutorials",
+      "content": "Tenho alguns segredos! 🎮 Comandos especiais: '/help' - ajuda rápida, '/stats' - suas estatísticas, '/joke' - piada aleatória, '/quote' - citação inspiradora, '/kawaii' - modo extra fofo, '/zen' - modo mindfulness. Descubra mais explorando! (◕‿◕)",
+      "tags": ["tutorial", "comandos", "easter-eggs", "segredos"],
+      "priority": 4,
+      "intent": "special_commands"
+    },
+    {
+      "id": "prompt_010",
+      "title": "Lista de tarefas inteligente",
+      "category": "prompts",
+      "content": "Vou organizar suas tarefas de forma inteligente! Diga suas atividades e eu: 1) Priorizo por urgência/importância. 2) Estimo tempo necessário. 3) Sugiro ordem de execução. 4) Identifico dependências. 5) Crio lembretes. 6) Defino marcos de progresso. Produtividade kawaii! ✅",
+      "tags": ["organização", "tarefas", "produtividade", "planejamento"],
+      "priority": 7,
+      "intent": "task_organization"
+    }
+  ]
+}

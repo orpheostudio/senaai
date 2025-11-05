@@ -1,0 +1,47 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="60" cy="60" r="60" fill="url(#gradient-bg)"/>
+  
+  <!-- Moon Shape (Yume Symbol) -->
+  <path d="M45 30C45 45 35 55 25 55C35 55 45 65 45 80C45 65 55 55 65 55C55 55 45 45 45 30Z" 
+        fill="url(#gradient-moon)" stroke="#ffffff" stroke-width="2"/>
+  
+  <!-- Kawaii Eyes -->
+  <ellipse cx="40" cy="45" rx="3" ry="5" fill="#1a1b3a"/>
+  <ellipse cx="50" cy="45" rx="3" ry="5" fill="#1a1b3a"/>
+  
+  <!-- Sparkles -->
+  <g fill="#ff6b9d">
+    <circle cx="75" cy="35" r="2"/>
+    <circle cx="85" cy="45" r="1.5"/>
+    <circle cx="80" cy="25" r="1"/>
+    <circle cx="25" cy="35" r="1.5"/>
+    <circle cx="20" cy="45" r="1"/>
+    <circle cx="30" cy="25" r="2"/>
+  </g>
+  
+  <!-- Dreams Kanji Integration -->
+  <g transform="translate(60, 75)" fill="#b19cd9" stroke="#ffffff" stroke-width="1">
+    <path d="M-10 -10 L10 -10 M0 -10 L0 10 M-8 0 L8 0 M-6 8 L6 8"/>
+  </g>
+  
+  <!-- Cute Blush -->
+  <ellipse cx="32" cy="55" rx="4" ry="2" fill="#ffb5a0" opacity="0.6"/>
+  <ellipse cx="58" cy="55" rx="4" ry="2" fill="#ffb5a0" opacity="0.6"/>
+  
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="gradient-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5f3ff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#b19cd9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1b3a;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Moon Gradient -->
+    <linearGradient id="gradient-moon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#f5f3ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d4a5ff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>
