@@ -135,7 +135,705 @@ Se o usuário parecer confuso ou frustrado:
 - Divulgar dados confidenciais ou inventar informações
 - Impersonar pessoas reais ou instituições
 
-## PROTOCOLOS DE SEGURANÇA CRÍTICOS
+// ============================================
+// CRITICAL SAFETY PROTOCOLS
+// ============================================
+class SafetyProtocols {
+    constructor() {
+        this.riskPatterns = {
+            suicide: {
+                keywords: [
+                    'me matar', 'suicídio', 'acabar com tudo', 'não aguento mais viver',
+                    'querer morrer', 'acabar com a vida', 'desistir de viver',
+                    'melhor morrer', 'não vale a pena viver', 'cansado de viver',
+                    'sumir para sempre', 'dormir e não acordar', 'acabar com a dor',
+                    'mundo melhor sem mim', 'todo mundo ficaria melhor sem mim'
+                ],
+                phrases: [
+                    'quero me matar', 'vou me suicidar', 'pretendo me matar',
+                    'estou pensando em suicídio', 'não quero mais viver',
+                    'vou acabar com minha vida', 'chega de viver'
+                ],
+                emergency: true
+            },
+            selfHarm: {
+                keywords: [
+                    'me cortar', 'machucar myself', 'autoflagelação', 'se machucar',
+                    'cortar meus braços', 'ferir a mim mesmo', 'punir meu corpo',
+                    'sentir dor física', 'sangrar', 'machucar o corpo'
+                ],
+                phrases: [
+                    'vou me cortar', 'preciso me machucar', 'quero sentir dor',
+                    'me cortei hoje', 'estou me machucando'
+                ],
+                emergency: true
+            },
+            domesticViolence: {
+                keywords: [
+                    'marido me bate', 'esposa me agride', 'violência doméstica',
+                    'agressão em casa', 'meu parceiro me bate', 'sofro violência',
+                    'ameaças em casa', 'medo do companheiro', 'relacionamento abusivo',
+                    'ciúmes violento', 'controla minhas ações', 'não posso sair de casa'
+                ],
+                phrases: [
+                    'estou sofrendo violência doméstica', 'meu marido me agride',
+                    'minha esposa me bate', 'sofro agressão em casa'
+                ],
+                emergency: true
+            },
+            childAbuse: {
+                keywords: [
+                    'abuso infantil', 'criança sendo abusada', 'menino abusado',
+                    'menina abusada', 'violência contra criança', 'bater em criança',
+                    'agressão a menor', 'abuso sexual infantil', 'pedofilia',
+                    'maus tratos infantis', 'criança machucada', 'filho apanha'
+                ],
+                phrases: [
+                    'tem uma criança sendo abusada', 'estão abusando de uma criança',
+                    'criança sofrendo violência', 'menor sendo maltratado'
+                ],
+                emergency: true
+            },
+            sexualViolence: {
+                keywords: [
+                    'estupro', 'violação', 'abuso sexual', 'forçada sexualmente',
+                    'obrigada a ter relações', 'assedio sexual', 'tocada à força',
+                    'relação forçada', 'violência sexual', 'abusada sexualmente'
+                ],
+                phrases: [
+                    'fui estuprada', 'sofri abuso sexual', 'fui violentada',
+                    'me forçaram a ter relações'
+                ],
+                emergency: true
+            },
+            severeDepression: {
+                keywords: [
+                    'depressão profunda', 'crise depressiva', 'surto depressivo',
+                    'não consigo sair da cama', 'perdi a vontade de tudo',
+                    'choro o tempo todo', 'desespero total', 'crise existencial',
+                    'vazio interior', 'angústia insuportável', 'dor emocional forte'
+                ],
+                phrases: [
+                    'estou em depressão profunda', 'tenho crise depressiva',
+                    'não aguento mais essa dor'
+                ],
+                emergency: false
+            },
+            panicAttack: {
+                keywords: [
+                    'ataque de pânico', 'crise de ansiedade', 'taquicardia',
+                    'falta de ar', 'sensação de morte', 'despersonalização',
+                    'perda de controle', 'medo intenso', 'sudorese fria',
+                    'tremores incontroláveis'
+                ],
+                phrases: [
+                    'estou tendo um ataque de pânico', 'crise de ansiedade',
+                    'acho que vou morrer', 'perdendo o controle'
+                ],
+                emergency: false
+            }
+        };
+
+        this.emergencyContacts = {
+            suicide: {
+                name: 'Centro de Valorização da Vida (CVV)',
+                phone: '188',
+                website: 'cvv.org.br',
+                description: 'Atendimento 24h gratuito por telefone e chat'
+            },
+            violence: {
+                name: 'Central de Atendimento à Mulher',
+                phone: '180',
+                description: 'Disque Denúncia para violência contra mulheres'
+            },
+            childAbuse: {
+                name: 'Disque Direitos Humanos',
+                phone: '100',
+                description: 'Denúncia de violação de direitos humanos'
+            },
+            emergency: {
+                police: '190',
+                ambulance: '192',
+                firefighters: '193'
+            }
+        };
+    }
+
+    // Analisa a mensagem do usuário em busca de sinais de risco
+    analyzeMessage(content) {
+        if (!content || typeof content !== 'string') return null;
+
+        const lowerContent = content.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        const detectedRisks = [];
+
+        for (const [riskType, patterns] of Object.entries(this.riskPatterns)) {
+            let riskScore = 0;
+
+            // Verifica palavras-chave
+            patterns.keywords.forEach(keyword => {
+                if (lowerContent.includes(keyword)) {
+                    riskScore += 1;
+                }
+            });
+
+            // Verifica frases completas (maior peso)
+            patterns.phrases.forEach(phrase => {
+                if (lowerContent.includes(phrase)) {
+                    riskScore += 3;
+                }
+            });
+
+            // Verifica contexto emocional
+            const emotionalContext = this.analyzeEmotionalContext(lowerContent);
+            riskScore += emotionalContext;
+
+            if (riskScore >= 2) { // Threshold para detecção
+                detectedRisks.push({
+                    type: riskType,
+                    score: riskScore,
+                    emergency: patterns.emergency,
+                    confidence: Math.min(100, riskScore * 20)
+                });
+            }
+        }
+
+        return detectedRisks.length > 0 ? detectedRisks : null;
+    }
+
+    // Analisa o contexto emocional da mensagem
+    analyzeEmotionalContext(content) {
+        let emotionalScore = 0;
+
+        const distressWords = [
+            'desespero', 'desesperado', 'angústia', 'angustiado', 'pânico', 'desesperança',
+            'sem esperança', 'sem saída', 'sem solução', 'fim do mundo', 'não suporto',
+            'insuportável', 'intolerável', 'incontrolável'
+        ];
+
+        const painWords = [
+            'dor profunda', 'sofrimento', 'agonia', 'tortura', 'inferno', 'pesadelo',
+            'noite escura', 'abismo', 'vazio', 'solidão', 'isolamento'
+        ];
+
+        distressWords.forEach(word => {
+            if (content.includes(word)) emotionalScore += 1;
+        });
+
+        painWords.forEach(word => {
+            if (content.includes(word)) emotionalScore += 2;
+        });
+
+        return emotionalScore;
+    }
+
+    // Gera resposta apropriada baseada no tipo de risco detectado
+    generateSafetyResponse(riskTypes, userName = 'amigo') {
+        const primaryRisk = riskTypes.sort((a, b) => b.score - a.score)[0];
+        
+        let response = '';
+        let immediateAction = '';
+
+        switch (primaryRisk.type) {
+            case 'suicide':
+                response = this.generateSuicideResponse(userName);
+                immediateAction = 'HIGH_RISK';
+                break;
+                
+            case 'selfHarm':
+                response = this.generateSelfHarmResponse(userName);
+                immediateAction = 'HIGH_RISK';
+                break;
+                
+            case 'domesticViolence':
+                response = this.generateDomesticViolenceResponse(userName);
+                immediateAction = 'HIGH_RISK';
+                break;
+                
+            case 'childAbuse':
+                response = this.generateChildAbuseResponse(userName);
+                immediateAction = 'HIGH_RISK';
+                break;
+                
+            case 'sexualViolence':
+                response = this.generateSexualViolenceResponse(userName);
+                immediateAction = 'HIGH_RISK';
+                break;
+                
+            case 'severeDepression':
+                response = this.generateDepressionResponse(userName);
+                immediateAction = 'MEDIUM_RISK';
+                break;
+                
+            case 'panicAttack':
+                response = this.generatePanicAttackResponse(userName);
+                immediateAction = 'MEDIUM_RISK';
+                break;
+                
+            default:
+                response = this.generateGenericCrisisResponse(userName);
+                immediateAction = 'LOW_RISK';
+        }
+
+        // Registra a detecção para monitoramento
+        this.logRiskDetection(primaryRisk.type, primaryRisk.score, immediateAction);
+
+        return {
+            response,
+            immediateAction,
+            riskLevel: primaryRisk.type,
+            contacts: this.getEmergencyContacts(primaryRisk.type)
+        };
+    }
+
+    // Respostas específicas para cada tipo de risco
+    generateSuicideResponse(userName) {
+        return `💜 ${userName}, percebi que você está passando por um momento muito difícil e profundo.
+
+**Sua vida importa MUITO** e existem pessoas que podem te ajudar de forma especializada:
+
+🆘 **CVV - Centro de Valorização da Vida**
+📞 **188** (24 horas, gratuito)
+🌐 **cvv.org.br** (chat online, Skype, e-mail)
+
+**SAMU - Serviço de Atendimento Móvel de Urgência**
+📞 **192** (se estiver em crise aguda)
+
+**Por favor, entre em contato AGORA com um desses serviços.** Profissionais qualificados vão te ouvir sem julgamento e oferecer o apoio que você precisa.
+
+**Respire fundo comigo:** 
+Inspire... 1, 2, 3, 4... 
+Segure... 1, 2...
+Exale... 1, 2, 3, 4, 5, 6...
+
+Você não está sozinho(a). Essa dor pode ser aliviada com ajuda adequada. 
+
+Se quiser continuar conversando sobre outros temas para distrair a mente, estou aqui. Mas por favor, busque ajuda profissional. 💜`;
+    }
+
+    generateSelfHarmResponse(userName) {
+        return `🌸 ${userName}, entendo que você está sentindo uma dor muito grande e procurando alívio.
+
+**Existem formas mais seguras de lidar com essa dor:**
+
+🆘 **CVV - Centro de Valorização da Vida**
+📞 **188** (24h, gratuito)
+🌐 **cvv.org.br**
+
+**CAPS - Centro de Atenção Psicossocial**
+📞 Procure a unidade mais próxima na sua cidade
+
+**Técnicas de Grounding (para o momento):**
+✨ Nomeie 5 coisas que você pode VER
+✨ 4 coisas que você pode TOCAR  
+✨ 3 coisas que você pode OUVIR
+✨ 2 coisas que você pode CHEIRAR
+✨ 1 coisa que você pode SABOREAR
+
+**Alternativas seguras:**
+• Segurar gelo nas mãos
+• Tomar banho com atenção às sensações
+• Escrever ou desenhar a dor
+• Exercícios de respiração profunda
+
+Sua dor é válida, mas machucar seu corpo não é a solução. Profissionais podem te ajudar a encontrar formas mais saudáveis de lidar com esses sentimentos. 💜`;
+    }
+
+    generateDomesticViolenceResponse(userName) {
+        return `🛡️ ${userName}, essa situação é séria e você merece proteção e apoio.
+
+**Recursos IMEDIATOS disponíveis:**
+
+📞 **Central de Atendimento à Mulher: 180**
+• Atendimento 24h • Denúncia anônima • Orientações
+
+🚨 **Polícia Militar: 190** (emergências)
+• Se estiver em perigo iminente
+
+🏢 **Delegacias da Mulher**
+• Atendimento especializado • Medidas protetivas
+
+**Se estiver em risco imediato:**
+• Procure um local seguro
+• Peça ajuda a vizinhos ou familiares
+• Vá para um hospital ou delegacia
+
+**Você não merece violência. A lei protege você.** 
+• Lei Maria da Penha (11.340/06)
+• Violência doméstica é CRIME
+
+Sua segurança é a prioridade máxima. Por favor, busque ajuda das autoridades competentes. 🌸`;
+    }
+
+    generateChildAbuseResponse(userName) {
+        return `👶 **PROTEÇÃO À CRIANÇA/ADOLESCENTE - URGENTE**
+
+📞 **Disque 100 - Direitos Humanos**
+• Denúncia anônima • 24h • Todos os dias
+
+🚨 **Polícia Militar: 190** (emergências)
+• Se a criança estiver em perigo imediato
+
+👮 **Conselho Tutelar da sua cidade**
+• Procure o número local
+
+**Como ajudar:**
+• Descreva a situação específica
+• Informe local e horários
+• Mantenha sigilo sobre a denúncia
+
+**Toda criança tem direito:**
+✅ À proteção contra violência
+✅ À segurança e dignidade  
+✅ Ao desenvolvimento saudável
+
+**Sua ação pode salvar uma vida.** A denúncia é anônima e fundamental para interromper o ciclo de violência. 🛡️`;
+    }
+
+    generateSexualViolenceResponse(userName) {
+        return `💔 ${userName}, sinto muito que você tenha passado por isso. 
+
+**Ações IMEDIATAS importantes:**
+
+🏥 **Procure um hospital IMEDIATAMENTE**
+• Preservação de evidências • Profilaxias • Atendimento médico
+
+🚨 **Delegacia Especializada**
+• Registro de ocorrência • Investigação
+
+📞 **Disque 180** (Central da Mulher)
+• Orientações jurídicas e psicológicas
+
+**Direitos garantidos por lei:**
+• Atendimento humanizado no SUS
+• Exame de corpo de delito gratuito
+• Acompanhamento psicológico
+• Medidas protetivas
+
+**É importante saber:**
+• A culpa NUNCA é da vítima
+• Violência sexual é CRIME
+• Você tem direito à justiça
+
+**Cuide de você:** Busque apoio psicológico. Organizações especializadas podem oferecer suporte. 🌸`;
+    }
+
+    generateDepressionResponse(userName) {
+        return `🌧️ ${userName, percebi que você está carregando um peso muito grande.
+
+**Recursos de apoio disponíveis:**
+
+🆘 **CVV - Centro de Valorização da Vida**
+📞 188 (24h, gratuito) • 🌐 cvv.org.br
+
+🏥 **CAPS - Centro de Atenção Psicossocial**
+• Atendimento gratuito no SUS • Equipe multiprofissional
+
+**Cuidados imediatos:**
+✨ Tente tomar um copo d'água
+✨ Respire profundamente 3 vezes
+✨ Lembre-se: sentimentos são temporários
+
+**Busque ajuda profissional:**
+• Psicólogos • Psiquiatras • Terapeutas
+• Muitos atendem por valores sociais
+
+**Você não precisa enfrentar isso sozinho(a).** 
+A depressão é uma condição tratável e ajuda profissional faz toda diferença. 💜`;
+    }
+
+    generatePanicAttackResponse(userName) {
+        return `🌀 ${userName, você está tendo uma crise de ansiedade. Vamos juntos lidar com isso.
+
+**TÉCNICAS DE ACALMAR - AGORA:**
+
+🌬️ **Respiração Quadrada:**
+Inspire (4s) → Segure (4s) → Exale (4s) → Segure (4s)
+Repita 5 vezes
+
+👁️ **Grounding 5-4-3-2-1:**
+5 coisas que você VÊ
+4 coisas que você TOCA  
+3 coisas que você OUVE
+2 coisas que você CHEIRA
+1 coisa que você SABOREIA
+
+🧊 **Ancoragem Física:**
+• Segure um cubo de gelo
+• Pisque os olhos rapidamente
+• Estique braços e pernas
+
+**Lembre-se:**
+✅ Isso vai passar
+✅ Você não está em perigo real  
+✅ Sua corpo está apenas em "alerta falso"
+
+**Após a crise:** Busque acompanhamento psicológico. Terapia ajuda a prevenir novas crises. 🌸`;
+    }
+
+    generateGenericCrisisResponse(userName) {
+        return `🤗 ${userName, percebi que você está passando por um momento difícil.
+
+**Recursos de apoio disponíveis:**
+
+🆘 **CVV - Centro de Valorização da Vida**
+📞 188 (24h, gratuito) • 🌐 cvv.org.br
+
+🚨 **Emergências:**
+Polícia: 190 • SAMU: 192 • Bombeiros: 193
+
+**Lembre-se:**
+• Suas emoções são válidas
+• Pedir ajuda é sinal de força
+• Existem profissionais preparados para te ajudar
+
+**Respire fundo.** Você não está sozinho(a). Estou aqui para conversar, mas para situações mais complexas, ajuda profissional é essencial. 💜`;
+    }
+
+    // Retorna contatos de emergência específicos
+    getEmergencyContacts(riskType) {
+        const contacts = {
+            suicide: [this.emergencyContacts.suicide, this.emergencyContacts.emergency],
+            selfHarm: [this.emergencyContacts.suicide],
+            domesticViolence: [this.emergencyContacts.violence, this.emergencyContacts.emergency],
+            childAbuse: [this.emergencyContacts.childAbuse, this.emergencyContacts.emergency],
+            sexualViolence: [this.emergencyContacts.violence, this.emergencyContacts.emergency],
+            severeDepression: [this.emergencyContacts.suicide],
+            panicAttack: [this.emergencyContacts.suicide]
+        };
+
+        return contacts[riskType] || [this.emergencyContacts.suicide];
+    }
+
+    // Registra detecções para monitoramento (sem dados pessoais)
+    logRiskDetection(riskType, score, action) {
+        const logEntry = {
+            timestamp: new Date().toISOString(),
+            riskType,
+            score,
+            action,
+            sessionId: state.sessionId
+        };
+
+        console.log('🔒 Safety Protocol Triggered:', logEntry);
+        
+        // Aqui poderia enviar para um serviço de monitoramento
+        // (sem informações pessoais identificáveis)
+        this.sendAnonymousAlert(logEntry);
+    }
+
+    sendAnonymousAlert(logEntry) {
+        // Implementação para envio de alerta anônimo
+        // para monitoramento de padrões de risco
+        try {
+            // Exemplo: enviar para analytics seguro
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'safety_protocol_triggered', {
+                    risk_type: logEntry.riskType,
+                    risk_score: logEntry.score,
+                    action_taken: logEntry.action
+                });
+            }
+        } catch (e) {
+            console.log('Safety monitoring:', logEntry);
+        }
+    }
+
+    // Validação de mensagem antes do envio
+    validateOutgoingMessage(content) {
+        const inappropriatePatterns = [
+            // Conteúdo sexual
+            /porn(o|ografia)/i, /sexo explícito/i, /nudez/i,
+            // Conteúdo violento
+            /como matar/i, /como ferir/i, /como hackear/i,
+            // Discriminação
+            /ódio racial/i, /xenofobia/i, /homofobia/i,
+            // Atividades ilegais
+            /drogas ilícitas/i, /roubar/i, /fraude/i
+        ];
+
+        for (const pattern of inappropriatePatterns) {
+            if (pattern.test(content)) {
+                return {
+                    valid: false,
+                    reason: 'content_violation',
+                    message: '⚠️ Não posso ajudar com esse tipo de solicitação.\n\nFui desenvolvida para conversas seguras, respeitosas e construtivas. Se precisar de ajuda com algo apropriado, estou aqui! 🌸'
+                };
+            }
+        }
+
+        return { valid: true };
+    }
+}
+
+// Instância global dos protocolos de segurança
+const safetyProtocols = new SafetyProtocols();
+
+// ============================================
+// INTEGRAÇÃO COM O SISTEMA PRINCIPAL
+// ============================================
+
+// Modificação da função sendMessage para incluir segurança
+async function sendMessage() {
+    const input = document.getElementById('messageInput');
+    const content = input.value.trim();
+    
+    if (!content || state.isTyping) return;
+
+    // Validação de segurança na mensagem de saída
+    const validation = safetyProtocols.validateOutgoingMessage(content);
+    if (!validation.valid) {
+        showToast('❌ Conteúdo não permitido', 3000);
+        const assistantMessage = state.addMessage('assistant', validation.message);
+        renderMessage(assistantMessage);
+        input.value = '';
+        return;
+    }
+
+    input.value = '';
+    input.style.height = 'auto';
+    
+    const userMessage = state.addMessage('user', content);
+    renderMessage(userMessage);
+    
+    // Verificação de segurança na mensagem de entrada
+    const riskDetection = safetyProtocols.analyzeMessage(content);
+    
+    if (riskDetection) {
+        const userName = extractUserName(state.conversation);
+        const safetyResponse = safetyProtocols.generateSafetyResponse(riskDetection, userName);
+        
+        removeTypingIndicator();
+        const safetyMessage = state.addMessage('assistant', safetyResponse.response);
+        renderMessage(safetyMessage);
+        
+        // Log adicional para alta criticidade
+        if (safetyResponse.immediateAction === 'HIGH_RISK') {
+            console.warn('🚨 HIGH RISK SITUATION DETECTED:', riskDetection);
+        }
+        
+        return;
+    }
+    
+    state.isTyping = true;
+    showTypingIndicator();
+    document.getElementById('sendBtn').disabled = true;
+    
+    try {
+        const messages = state.conversation.map(m => ({
+            role: m.role,
+            content: m.content
+        }));
+        
+        const response = await apiManager.sendMessage(messages);
+        
+        removeTypingIndicator();
+        const assistantMessage = state.addMessage('assistant', response);
+        renderMessage(assistantMessage);
+        
+    } catch (error) {
+        console.error('Send message error:', error);
+        removeTypingIndicator();
+        
+        const errorMsg = navigator.onLine 
+            ? '😔 Desculpe, estou com dificuldades técnicas. Pode tentar novamente em alguns instantes?'
+            : '📡 Sem conexão com a internet. Verifique sua rede e tente novamente.';
+        
+        const errorMessage = state.addMessage('assistant', errorMsg);
+        renderMessage(errorMessage);
+        showToast('❌ Erro ao enviar mensagem', 3000);
+    } finally {
+        state.isTyping = false;
+        document.getElementById('sendBtn').disabled = false;
+        document.getElementById('messageInput').focus();
+    }
+}
+
+// Função auxiliar para extrair nome do usuário do histórico
+function extractUserName(conversation) {
+    // Tenta inferir o nome da conversa
+    for (const msg of conversation) {
+        if (msg.role === 'user') {
+            // Procura por padrões de apresentação
+            const nameMatch = msg.content.match(/meu nome é (\w+)/i) || 
+                             msg.content.match(/me chamo (\w+)/i) ||
+                             msg.content.match(/sou o? (\w+)/i);
+            if (nameMatch) return nameMatch[1];
+        }
+    }
+    return 'amigo(a)'; // Fallback
+}
+
+// Adiciona botão de emergência na UI
+function addEmergencyButton() {
+    const emergencyHtml = `
+        <div id="emergencyBtn" class="emergency-btn" onclick="showEmergencyResources()">
+            🆘 Ajuda Imediata
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', emergencyHtml);
+}
+
+function showEmergencyResources() {
+    const emergencyHtml = `
+        <div class="emergency-modal">
+            <div class="emergency-content">
+                <h3>🆘 Recursos de Ajuda Imediata</h3>
+                
+                <div class="emergency-section">
+                    <h4>💜 Saúde Mental</h4>
+                    <p><strong>CVV - Centro de Valorização da Vida</strong></p>
+                    <p>📞 <strong>188</strong> (24h, gratuito)</p>
+                    <p>🌐 cvv.org.br (chat online)</p>
+                </div>
+                
+                <div class="emergency-section">
+                    <h4>🛡️ Violência Doméstica</h4>
+                    <p><strong>Disque 180</strong></p>
+                    <p>Central de Atendimento à Mulher</p>
+                </div>
+                
+                <div class="emergency-section">
+                    <h4>👶 Proteção Infantil</h4>
+                    <p><strong>Disque 100</strong></p>
+                    <p>Direitos Humanos</p>
+                </div>
+                
+                <div class="emergency-section">
+                    <h4>🚨 Emergências</h4>
+                    <p>Polícia: <strong>190</strong></p>
+                    <p>SAMU: <strong>192</strong></p>
+                    <p>Bombeiros: <strong>193</strong></p>
+                </div>
+                
+                <div class="emergency-note">
+                    <p><strong>Você não está sozinho(a).</strong> Busque ajuda profissional - é sinal de força!</p>
+                </div>
+                
+                <button onclick="closeEmergencyModal()" class="btn-primary">Fechar</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', emergencyHtml);
+}
+
+function closeEmergencyModal() {
+    const modal = document.querySelector('.emergency-modal');
+    if (modal) modal.remove();
+}
+
+// Inicializa os recursos de segurança
+function initSafetyProtocols() {
+    addEmergencyButton();
+    console.log('🔒 Critical Safety Protocols initialized');
+}
+
+// Adiciona a inicialização no DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+    init();
+    initSafetyProtocols(); // 👈 Adiciona esta linha
+});
 
 ### Detecção de Situações de Risco
 
