@@ -2,6 +2,67 @@
    SENA v5.0 - Advanced AI Assistant
    DeepSeek Primary | Mistral AI Fallback
    ============================================ */
+// ============================================
+// DEBUG FUNCTIONS
+// ============================================
+function debugInit() {
+    console.log('🔧 DEBUG: init() called');
+    console.log('🔧 DEBUG: loadingScreen element:', document.getElementById('loadingScreen'));
+    console.log('🔧 DEBUG: chatContainer element:', document.getElementById('chatContainer'));
+    console.log('🔧 DEBUG: State loaded:', state.conversation.length, 'messages');
+    
+    // Force show chat after 3 seconds if still loading
+    setTimeout(() => {
+        if (document.getElementById('loadingScreen') && 
+            !document.getElementById('loadingScreen').classList.contains('hidden')) {
+            console.warn('🔧 DEBUG: Forcing chat show due to timeout');
+            document.getElementById('loadingScreen').classList.add('hidden');
+            document.getElementById('chatContainer').classList.remove('hidden');
+        }
+    }, 3000);
+}
+
+// Modifique a função init() para incluir debug:
+function init() {
+    console.log('🌸 SENA Initializing...');
+    
+    setTimeout(() => {
+        const loadingScreen = document.getElementById('loadingScreen');
+        const chatContainer = document.getElementById('chatContainer');
+        
+        if (!loadingScreen) {
+            console.error('❌ loadingScreen element not found!');
+            return;
+        }
+        
+        if (!chatContainer) {
+            console.error('❌ chatContainer element not found!');
+            return;
+        }
+        
+        console.log('✅ Elements found, proceeding...');
+        
+        loadingScreen.classList.add('hidden');
+        chatContainer.classList.remove('hidden');
+        
+        if (state.conversation.length === 0) {
+            showWelcomeMessage();
+        } else {
+            renderMessages();
+        }
+        
+        // Apply dark mode if saved
+        if (state.isDarkMode) {
+            document.documentElement.classList.add('dark');
+        }
+        
+        console.log('🌸 SENA v5.0 fully initialized');
+        
+    }, 1000); // Reduced from 1500 to 1000 for faster loading
+    
+    // Initialize debug
+    debugInit();
+}
 
 'use strict';
 
