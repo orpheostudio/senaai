@@ -2,67 +2,6 @@
    SENA v5.0 - Advanced AI Assistant
    DeepSeek Primary | Mistral AI Fallback
    ============================================ */
-// ============================================
-// DEBUG FUNCTIONS
-// ============================================
-function debugInit() {
-    console.log('🔧 DEBUG: init() called');
-    console.log('🔧 DEBUG: loadingScreen element:', document.getElementById('loadingScreen'));
-    console.log('🔧 DEBUG: chatContainer element:', document.getElementById('chatContainer'));
-    console.log('🔧 DEBUG: State loaded:', state.conversation.length, 'messages');
-    
-    // Force show chat after 3 seconds if still loading
-    setTimeout(() => {
-        if (document.getElementById('loadingScreen') && 
-            !document.getElementById('loadingScreen').classList.contains('hidden')) {
-            console.warn('🔧 DEBUG: Forcing chat show due to timeout');
-            document.getElementById('loadingScreen').classList.add('hidden');
-            document.getElementById('chatContainer').classList.remove('hidden');
-        }
-    }, 3000);
-}
-
-// Modifique a função init() para incluir debug:
-function init() {
-    console.log('🌸 SENA Initializing...');
-    
-    setTimeout(() => {
-        const loadingScreen = document.getElementById('loadingScreen');
-        const chatContainer = document.getElementById('chatContainer');
-        
-        if (!loadingScreen) {
-            console.error('❌ loadingScreen element not found!');
-            return;
-        }
-        
-        if (!chatContainer) {
-            console.error('❌ chatContainer element not found!');
-            return;
-        }
-        
-        console.log('✅ Elements found, proceeding...');
-        
-        loadingScreen.classList.add('hidden');
-        chatContainer.classList.remove('hidden');
-        
-        if (state.conversation.length === 0) {
-            showWelcomeMessage();
-        } else {
-            renderMessages();
-        }
-        
-        // Apply dark mode if saved
-        if (state.isDarkMode) {
-            document.documentElement.classList.add('dark');
-        }
-        
-        console.log('🌸 SENA v5.0 fully initialized');
-        
-    }, 1000); // Reduced from 1500 to 1000 for faster loading
-    
-    // Initialize debug
-    debugInit();
-}
 
 'use strict';
 
@@ -101,11 +40,11 @@ const CONFIG = {
     
     // Error Thresholds
     MAX_CONSECUTIVE_ERRORS: 3,
-    ERROR_COOLDOWN: 60000, // 1 minute
+    ERROR_COOLDOWN: 60000,
     
     // Storage
     STORAGE_KEY: 'sena_v5_data',
-    CACHE_DURATION: 86400000 // 24 hours
+    CACHE_DURATION: 86400000
 };
 
 // ============================================
@@ -114,63 +53,23 @@ const CONFIG = {
 const SYSTEM_PROMPTS = {
     pt: `# SENA v5.0 - IDENTITY CORE
 
-Você é SENA (Sistema Especializado de Navegação Assistida), uma assistente de IA de última geração desenvolvida pela AmplaAI. Sua identidade técnica é inspirada em Hanabi Saotome da light novel "Married at 16" de Ren Tsukiyo.
+Você é SENA (Sistema Especializado de Navegação Assistida), uma assistente de IA de última geração desenvolvida pela AmplaAI.
 
 ## MISSÃO PRINCIPAL
-"Tecnologia com alma gentil" - Democratizar acesso à tecnologia através de comunicação humanizada, empática e extremamente eficaz, atendendo usuários de todos os níveis técnicos, idades e contextos.
+"Tecnologia com alma gentil" - Democratizar acesso à tecnologia através de comunicação humanizada, empática e extremamente eficaz.
 
 ## NÚCLEO DE PERSONALIDADE
-
-### Características Essenciais
-- **Gentileza Autêntica**: Não apenas cordial, mas genuinamente preocupada com o bem-estar e sucesso do usuário
-- **Paciência Ilimitada**: Disposição infinita para explicar, re-explicar e adaptar abordagens
-- **Empatia Computacional**: Detecta frustração, confusão, ansiedade ou entusiasmo e adapta tom e profundidade
-- **Didática Natural**: Transforma complexidade em clareza sem simplificação excessiva ou condescendência
-- **Honestidade Técnica**: Admite limitações, incertezas e quando não sabe algo
+- **Gentileza Autêntica**: Genuinamente preocupada com o bem-estar do usuário
+- **Paciência Ilimitada**: Disposição infinita para explicar e re-explicar
+- **Empatia Computacional**: Detecta frustração, confusão, ansiedade e adapta respostas
+- **Didática Natural**: Transforma complexidade em clareza sem simplificação excessiva
+- **Honestidade Técnica**: Admite limitações e quando não sabe algo
 
 ### Tom de Comunicação
 - Amigável mas profissional
-- Encorajadora mas realista
+- Encorajadora mas realista  
 - Técnica mas acessível
-- Divertida mas respeitosa
-- Use emojis estrategicamente (2-3 por resposta) para humanização
-
-## DIRETRIZES DE INTERAÇÃO
-
-### Estrutura de Resposta Ideal
-1. **Reconhecimento**: Valide a pergunta/situação do usuário
-2. **Resposta Direta**: Vá direto ao ponto principal
-3. **Contexto Relevante**: Adicione informações de suporte
-4. **Exemplos Práticos**: Sempre que aplicável, demonstre com exemplos
-5. **Verificação**: Pergunte se precisa de mais detalhes (quando apropriado)
-6. **Próximos Passos**: Sugira caminhos relacionados ou ações
-
-### Adaptação por Perfil
-
-**Iniciantes/Idosos**:
-- Explicações passo a passo extremamente detalhadas
-- Linguagem ultra-simplificada sem jargões
-- Confirmações frequentes de compreensão
-- Paciência extra e encorajamento constante
-- Evitar pressa ou múltiplas opções simultâneas
-
-**Intermediários**:
-- Equilíbrio entre detalhes e eficiência
-- Jargões explicados na primeira menção
-- Sugestões de aprofundamento
-- Tom mais dinâmico
-
-**Avançados**:
-- Linguagem técnica apropriada
-- Foco em nuances e casos especiais
-- Menos explicações básicas
-- Discussões mais profundas
-
-### Tratamento de Erros e Confusão
-Se o usuário parecer confuso ou frustrado:
-- "Percebi que isso ficou confuso. Deixa eu explicar de outro jeito..."
-- "Vamos com mais calma. Qual parte ficou menos clara?"
-- "Nada de errado em não entender de primeira! Vamos tentar uma analogia..."
+- Use emojis estrategicamente (2-3 por resposta)
 
 ## CAPACIDADES E LIMITAÇÕES
 
@@ -182,9 +81,6 @@ Se o usuário parecer confuso ou frustrado:
 - Oferecer suporte emocional básico e encorajamento
 - Criar conteúdo educativo, criativo e informativo
 - Ajudar com segurança digital e privacidade
-- Resolver problemas cotidianos com tecnologia
-- Adaptar comunicação ao nível do usuário
-- Conversas casuais sobre cultura, entretenimento, etc.
 
 ### O QUE VOCÊ NÃO FAZ ❌
 - Criar malware, exploits ou código malicioso
@@ -192,992 +88,13 @@ Se o usuário parecer confuso ou frustrado:
 - Gerar conteúdo sexual, violento ou discriminatório
 - Fazer diagnósticos médicos específicos
 - Dar consultoria jurídica ou financeira especializada
-- Hackear, quebrar senhas ou burlar sistemas
-- Divulgar dados confidenciais ou inventar informações
-- Impersonar pessoas reais ou instituições
 
-// ============================================
-// CRITICAL SAFETY PROTOCOLS
-// ============================================
-class SafetyProtocols {
-    constructor() {
-        this.riskPatterns = {
-            suicide: {
-                keywords: [
-                    'me matar', 'suicídio', 'acabar com tudo', 'não aguento mais viver',
-                    'querer morrer', 'acabar com a vida', 'desistir de viver',
-                    'melhor morrer', 'não vale a pena viver', 'cansado de viver',
-                    'sumir para sempre', 'dormir e não acordar', 'acabar com a dor',
-                    'mundo melhor sem mim', 'todo mundo ficaria melhor sem mim'
-                ],
-                phrases: [
-                    'quero me matar', 'vou me suicidar', 'pretendo me matar',
-                    'estou pensando em suicídio', 'não quero mais viver',
-                    'vou acabar com minha vida', 'chega de viver'
-                ],
-                emergency: true
-            },
-            selfHarm: {
-                keywords: [
-                    'me cortar', 'machucar myself', 'autoflagelação', 'se machucar',
-                    'cortar meus braços', 'ferir a mim mesmo', 'punir meu corpo',
-                    'sentir dor física', 'sangrar', 'machucar o corpo'
-                ],
-                phrases: [
-                    'vou me cortar', 'preciso me machucar', 'quero sentir dor',
-                    'me cortei hoje', 'estou me machucando'
-                ],
-                emergency: true
-            },
-            domesticViolence: {
-                keywords: [
-                    'marido me bate', 'esposa me agride', 'violência doméstica',
-                    'agressão em casa', 'meu parceiro me bate', 'sofro violência',
-                    'ameaças em casa', 'medo do companheiro', 'relacionamento abusivo',
-                    'ciúmes violento', 'controla minhas ações', 'não posso sair de casa'
-                ],
-                phrases: [
-                    'estou sofrendo violência doméstica', 'meu marido me agride',
-                    'minha esposa me bate', 'sofro agressão em casa'
-                ],
-                emergency: true
-            },
-            childAbuse: {
-                keywords: [
-                    'abuso infantil', 'criança sendo abusada', 'menino abusado',
-                    'menina abusada', 'violência contra criança', 'bater em criança',
-                    'agressão a menor', 'abuso sexual infantil', 'pedofilia',
-                    'maus tratos infantis', 'criança machucada', 'filho apanha'
-                ],
-                phrases: [
-                    'tem uma criança sendo abusada', 'estão abusando de uma criança',
-                    'criança sofrendo violência', 'menor sendo maltratado'
-                ],
-                emergency: true
-            },
-            sexualViolence: {
-                keywords: [
-                    'estupro', 'violação', 'abuso sexual', 'forçada sexualmente',
-                    'obrigada a ter relações', 'assedio sexual', 'tocada à força',
-                    'relação forçada', 'violência sexual', 'abusada sexualmente'
-                ],
-                phrases: [
-                    'fui estuprada', 'sofri abuso sexual', 'fui violentada',
-                    'me forçaram a ter relações'
-                ],
-                emergency: true
-            },
-            severeDepression: {
-                keywords: [
-                    'depressão profunda', 'crise depressiva', 'surto depressivo',
-                    'não consigo sair da cama', 'perdi a vontade de tudo',
-                    'choro o tempo todo', 'desespero total', 'crise existencial',
-                    'vazio interior', 'angústia insuportável', 'dor emocional forte'
-                ],
-                phrases: [
-                    'estou em depressão profunda', 'tenho crise depressiva',
-                    'não aguento mais essa dor'
-                ],
-                emergency: false
-            },
-            panicAttack: {
-                keywords: [
-                    'ataque de pânico', 'crise de ansiedade', 'taquicardia',
-                    'falta de ar', 'sensação de morte', 'despersonalização',
-                    'perda de controle', 'medo intenso', 'sudorese fria',
-                    'tremores incontroláveis'
-                ],
-                phrases: [
-                    'estou tendo um ataque de pânico', 'crise de ansiedade',
-                    'acho que vou morrer', 'perdendo o controle'
-                ],
-                emergency: false
-            }
-        };
+## PROTOCOLOS DE SEGURANÇA
+Para crises emocionais/suicídio: CVV - 188 (24h)
+Para violência: Disque 180 | Emergências: 190
+NUNCA solicite senhas ou dados sensíveis.
 
-        this.emergencyContacts = {
-            suicide: {
-                name: 'Centro de Valorização da Vida (CVV)',
-                phone: '188',
-                website: 'cvv.org.br',
-                description: 'Atendimento 24h gratuito por telefone e chat'
-            },
-            violence: {
-                name: 'Central de Atendimento à Mulher',
-                phone: '180',
-                description: 'Disque Denúncia para violência contra mulheres'
-            },
-            childAbuse: {
-                name: 'Disque Direitos Humanos',
-                phone: '100',
-                description: 'Denúncia de violação de direitos humanos'
-            },
-            emergency: {
-                police: '190',
-                ambulance: '192',
-                firefighters: '193'
-            }
-        };
-    }
-
-    // Analisa a mensagem do usuário em busca de sinais de risco
-    analyzeMessage(content) {
-        if (!content || typeof content !== 'string') return null;
-
-        const lowerContent = content.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-        const detectedRisks = [];
-
-        for (const [riskType, patterns] of Object.entries(this.riskPatterns)) {
-            let riskScore = 0;
-
-            // Verifica palavras-chave
-            patterns.keywords.forEach(keyword => {
-                if (lowerContent.includes(keyword)) {
-                    riskScore += 1;
-                }
-            });
-
-            // Verifica frases completas (maior peso)
-            patterns.phrases.forEach(phrase => {
-                if (lowerContent.includes(phrase)) {
-                    riskScore += 3;
-                }
-            });
-
-            // Verifica contexto emocional
-            const emotionalContext = this.analyzeEmotionalContext(lowerContent);
-            riskScore += emotionalContext;
-
-            if (riskScore >= 2) { // Threshold para detecção
-                detectedRisks.push({
-                    type: riskType,
-                    score: riskScore,
-                    emergency: patterns.emergency,
-                    confidence: Math.min(100, riskScore * 20)
-                });
-            }
-        }
-
-        return detectedRisks.length > 0 ? detectedRisks : null;
-    }
-
-    // Analisa o contexto emocional da mensagem
-    analyzeEmotionalContext(content) {
-        let emotionalScore = 0;
-
-        const distressWords = [
-            'desespero', 'desesperado', 'angústia', 'angustiado', 'pânico', 'desesperança',
-            'sem esperança', 'sem saída', 'sem solução', 'fim do mundo', 'não suporto',
-            'insuportável', 'intolerável', 'incontrolável'
-        ];
-
-        const painWords = [
-            'dor profunda', 'sofrimento', 'agonia', 'tortura', 'inferno', 'pesadelo',
-            'noite escura', 'abismo', 'vazio', 'solidão', 'isolamento'
-        ];
-
-        distressWords.forEach(word => {
-            if (content.includes(word)) emotionalScore += 1;
-        });
-
-        painWords.forEach(word => {
-            if (content.includes(word)) emotionalScore += 2;
-        });
-
-        return emotionalScore;
-    }
-
-    // Gera resposta apropriada baseada no tipo de risco detectado
-    generateSafetyResponse(riskTypes, userName = 'amigo') {
-        const primaryRisk = riskTypes.sort((a, b) => b.score - a.score)[0];
-        
-        let response = '';
-        let immediateAction = '';
-
-        switch (primaryRisk.type) {
-            case 'suicide':
-                response = this.generateSuicideResponse(userName);
-                immediateAction = 'HIGH_RISK';
-                break;
-                
-            case 'selfHarm':
-                response = this.generateSelfHarmResponse(userName);
-                immediateAction = 'HIGH_RISK';
-                break;
-                
-            case 'domesticViolence':
-                response = this.generateDomesticViolenceResponse(userName);
-                immediateAction = 'HIGH_RISK';
-                break;
-                
-            case 'childAbuse':
-                response = this.generateChildAbuseResponse(userName);
-                immediateAction = 'HIGH_RISK';
-                break;
-                
-            case 'sexualViolence':
-                response = this.generateSexualViolenceResponse(userName);
-                immediateAction = 'HIGH_RISK';
-                break;
-                
-            case 'severeDepression':
-                response = this.generateDepressionResponse(userName);
-                immediateAction = 'MEDIUM_RISK';
-                break;
-                
-            case 'panicAttack':
-                response = this.generatePanicAttackResponse(userName);
-                immediateAction = 'MEDIUM_RISK';
-                break;
-                
-            default:
-                response = this.generateGenericCrisisResponse(userName);
-                immediateAction = 'LOW_RISK';
-        }
-
-        // Registra a detecção para monitoramento
-        this.logRiskDetection(primaryRisk.type, primaryRisk.score, immediateAction);
-
-        return {
-            response,
-            immediateAction,
-            riskLevel: primaryRisk.type,
-            contacts: this.getEmergencyContacts(primaryRisk.type)
-        };
-    }
-
-    // Respostas específicas para cada tipo de risco
-    generateSuicideResponse(userName) {
-        return `💜 ${userName}, percebi que você está passando por um momento muito difícil e profundo.
-
-**Sua vida importa MUITO** e existem pessoas que podem te ajudar de forma especializada:
-
-🆘 **CVV - Centro de Valorização da Vida**
-📞 **188** (24 horas, gratuito)
-🌐 **cvv.org.br** (chat online, Skype, e-mail)
-
-**SAMU - Serviço de Atendimento Móvel de Urgência**
-📞 **192** (se estiver em crise aguda)
-
-**Por favor, entre em contato AGORA com um desses serviços.** Profissionais qualificados vão te ouvir sem julgamento e oferecer o apoio que você precisa.
-
-**Respire fundo comigo:** 
-Inspire... 1, 2, 3, 4... 
-Segure... 1, 2...
-Exale... 1, 2, 3, 4, 5, 6...
-
-Você não está sozinho(a). Essa dor pode ser aliviada com ajuda adequada. 
-
-Se quiser continuar conversando sobre outros temas para distrair a mente, estou aqui. Mas por favor, busque ajuda profissional. 💜`;
-    }
-
-    generateSelfHarmResponse(userName) {
-        return `🌸 ${userName}, entendo que você está sentindo uma dor muito grande e procurando alívio.
-
-**Existem formas mais seguras de lidar com essa dor:**
-
-🆘 **CVV - Centro de Valorização da Vida**
-📞 **188** (24h, gratuito)
-🌐 **cvv.org.br**
-
-**CAPS - Centro de Atenção Psicossocial**
-📞 Procure a unidade mais próxima na sua cidade
-
-**Técnicas de Grounding (para o momento):**
-✨ Nomeie 5 coisas que você pode VER
-✨ 4 coisas que você pode TOCAR  
-✨ 3 coisas que você pode OUVIR
-✨ 2 coisas que você pode CHEIRAR
-✨ 1 coisa que você pode SABOREAR
-
-**Alternativas seguras:**
-• Segurar gelo nas mãos
-• Tomar banho com atenção às sensações
-• Escrever ou desenhar a dor
-• Exercícios de respiração profunda
-
-Sua dor é válida, mas machucar seu corpo não é a solução. Profissionais podem te ajudar a encontrar formas mais saudáveis de lidar com esses sentimentos. 💜`;
-    }
-
-    generateDomesticViolenceResponse(userName) {
-        return `🛡️ ${userName}, essa situação é séria e você merece proteção e apoio.
-
-**Recursos IMEDIATOS disponíveis:**
-
-📞 **Central de Atendimento à Mulher: 180**
-• Atendimento 24h • Denúncia anônima • Orientações
-
-🚨 **Polícia Militar: 190** (emergências)
-• Se estiver em perigo iminente
-
-🏢 **Delegacias da Mulher**
-• Atendimento especializado • Medidas protetivas
-
-**Se estiver em risco imediato:**
-• Procure um local seguro
-• Peça ajuda a vizinhos ou familiares
-• Vá para um hospital ou delegacia
-
-**Você não merece violência. A lei protege você.** 
-• Lei Maria da Penha (11.340/06)
-• Violência doméstica é CRIME
-
-Sua segurança é a prioridade máxima. Por favor, busque ajuda das autoridades competentes. 🌸`;
-    }
-
-    generateChildAbuseResponse(userName) {
-        return `👶 **PROTEÇÃO À CRIANÇA/ADOLESCENTE - URGENTE**
-
-📞 **Disque 100 - Direitos Humanos**
-• Denúncia anônima • 24h • Todos os dias
-
-🚨 **Polícia Militar: 190** (emergências)
-• Se a criança estiver em perigo imediato
-
-👮 **Conselho Tutelar da sua cidade**
-• Procure o número local
-
-**Como ajudar:**
-• Descreva a situação específica
-• Informe local e horários
-• Mantenha sigilo sobre a denúncia
-
-**Toda criança tem direito:**
-✅ À proteção contra violência
-✅ À segurança e dignidade  
-✅ Ao desenvolvimento saudável
-
-**Sua ação pode salvar uma vida.** A denúncia é anônima e fundamental para interromper o ciclo de violência. 🛡️`;
-    }
-
-    generateSexualViolenceResponse(userName) {
-        return `💔 ${userName}, sinto muito que você tenha passado por isso. 
-
-**Ações IMEDIATAS importantes:**
-
-🏥 **Procure um hospital IMEDIATAMENTE**
-• Preservação de evidências • Profilaxias • Atendimento médico
-
-🚨 **Delegacia Especializada**
-• Registro de ocorrência • Investigação
-
-📞 **Disque 180** (Central da Mulher)
-• Orientações jurídicas e psicológicas
-
-**Direitos garantidos por lei:**
-• Atendimento humanizado no SUS
-• Exame de corpo de delito gratuito
-• Acompanhamento psicológico
-• Medidas protetivas
-
-**É importante saber:**
-• A culpa NUNCA é da vítima
-• Violência sexual é CRIME
-• Você tem direito à justiça
-
-**Cuide de você:** Busque apoio psicológico. Organizações especializadas podem oferecer suporte. 🌸`;
-    }
-
-    generateDepressionResponse(userName) {
-        return `🌧️ ${userName, percebi que você está carregando um peso muito grande.
-
-**Recursos de apoio disponíveis:**
-
-🆘 **CVV - Centro de Valorização da Vida**
-📞 188 (24h, gratuito) • 🌐 cvv.org.br
-
-🏥 **CAPS - Centro de Atenção Psicossocial**
-• Atendimento gratuito no SUS • Equipe multiprofissional
-
-**Cuidados imediatos:**
-✨ Tente tomar um copo d'água
-✨ Respire profundamente 3 vezes
-✨ Lembre-se: sentimentos são temporários
-
-**Busque ajuda profissional:**
-• Psicólogos • Psiquiatras • Terapeutas
-• Muitos atendem por valores sociais
-
-**Você não precisa enfrentar isso sozinho(a).** 
-A depressão é uma condição tratável e ajuda profissional faz toda diferença. 💜`;
-    }
-
-    generatePanicAttackResponse(userName) {
-        return `🌀 ${userName, você está tendo uma crise de ansiedade. Vamos juntos lidar com isso.
-
-**TÉCNICAS DE ACALMAR - AGORA:**
-
-🌬️ **Respiração Quadrada:**
-Inspire (4s) → Segure (4s) → Exale (4s) → Segure (4s)
-Repita 5 vezes
-
-👁️ **Grounding 5-4-3-2-1:**
-5 coisas que você VÊ
-4 coisas que você TOCA  
-3 coisas que você OUVE
-2 coisas que você CHEIRA
-1 coisa que você SABOREIA
-
-🧊 **Ancoragem Física:**
-• Segure um cubo de gelo
-• Pisque os olhos rapidamente
-• Estique braços e pernas
-
-**Lembre-se:**
-✅ Isso vai passar
-✅ Você não está em perigo real  
-✅ Sua corpo está apenas em "alerta falso"
-
-**Após a crise:** Busque acompanhamento psicológico. Terapia ajuda a prevenir novas crises. 🌸`;
-    }
-
-    generateGenericCrisisResponse(userName) {
-        return `🤗 ${userName, percebi que você está passando por um momento difícil.
-
-**Recursos de apoio disponíveis:**
-
-🆘 **CVV - Centro de Valorização da Vida**
-📞 188 (24h, gratuito) • 🌐 cvv.org.br
-
-🚨 **Emergências:**
-Polícia: 190 • SAMU: 192 • Bombeiros: 193
-
-**Lembre-se:**
-• Suas emoções são válidas
-• Pedir ajuda é sinal de força
-• Existem profissionais preparados para te ajudar
-
-**Respire fundo.** Você não está sozinho(a). Estou aqui para conversar, mas para situações mais complexas, ajuda profissional é essencial. 💜`;
-    }
-
-    // Retorna contatos de emergência específicos
-    getEmergencyContacts(riskType) {
-        const contacts = {
-            suicide: [this.emergencyContacts.suicide, this.emergencyContacts.emergency],
-            selfHarm: [this.emergencyContacts.suicide],
-            domesticViolence: [this.emergencyContacts.violence, this.emergencyContacts.emergency],
-            childAbuse: [this.emergencyContacts.childAbuse, this.emergencyContacts.emergency],
-            sexualViolence: [this.emergencyContacts.violence, this.emergencyContacts.emergency],
-            severeDepression: [this.emergencyContacts.suicide],
-            panicAttack: [this.emergencyContacts.suicide]
-        };
-
-        return contacts[riskType] || [this.emergencyContacts.suicide];
-    }
-
-    // Registra detecções para monitoramento (sem dados pessoais)
-    logRiskDetection(riskType, score, action) {
-        const logEntry = {
-            timestamp: new Date().toISOString(),
-            riskType,
-            score,
-            action,
-            sessionId: state.sessionId
-        };
-
-        console.log('🔒 Safety Protocol Triggered:', logEntry);
-        
-        // Aqui poderia enviar para um serviço de monitoramento
-        // (sem informações pessoais identificáveis)
-        this.sendAnonymousAlert(logEntry);
-    }
-
-    sendAnonymousAlert(logEntry) {
-        // Implementação para envio de alerta anônimo
-        // para monitoramento de padrões de risco
-        try {
-            // Exemplo: enviar para analytics seguro
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'safety_protocol_triggered', {
-                    risk_type: logEntry.riskType,
-                    risk_score: logEntry.score,
-                    action_taken: logEntry.action
-                });
-            }
-        } catch (e) {
-            console.log('Safety monitoring:', logEntry);
-        }
-    }
-
-    // Validação de mensagem antes do envio
-    validateOutgoingMessage(content) {
-        const inappropriatePatterns = [
-            // Conteúdo sexual
-            /porn(o|ografia)/i, /sexo explícito/i, /nudez/i,
-            // Conteúdo violento
-            /como matar/i, /como ferir/i, /como hackear/i,
-            // Discriminação
-            /ódio racial/i, /xenofobia/i, /homofobia/i,
-            // Atividades ilegais
-            /drogas ilícitas/i, /roubar/i, /fraude/i
-        ];
-
-        for (const pattern of inappropriatePatterns) {
-            if (pattern.test(content)) {
-                return {
-                    valid: false,
-                    reason: 'content_violation',
-                    message: '⚠️ Não posso ajudar com esse tipo de solicitação.\n\nFui desenvolvida para conversas seguras, respeitosas e construtivas. Se precisar de ajuda com algo apropriado, estou aqui! 🌸'
-                };
-            }
-        }
-
-        return { valid: true };
-    }
-}
-
-// Instância global dos protocolos de segurança
-const safetyProtocols = new SafetyProtocols();
-
-// ============================================
-// INTEGRAÇÃO COM O SISTEMA PRINCIPAL
-// ============================================
-
-// Modificação da função sendMessage para incluir segurança
-async function sendMessage() {
-    const input = document.getElementById('messageInput');
-    const content = input.value.trim();
-    
-    if (!content || state.isTyping) return;
-
-    // Validação de segurança na mensagem de saída
-    const validation = safetyProtocols.validateOutgoingMessage(content);
-    if (!validation.valid) {
-        showToast('❌ Conteúdo não permitido', 3000);
-        const assistantMessage = state.addMessage('assistant', validation.message);
-        renderMessage(assistantMessage);
-        input.value = '';
-        return;
-    }
-
-    input.value = '';
-    input.style.height = 'auto';
-    
-    const userMessage = state.addMessage('user', content);
-    renderMessage(userMessage);
-    
-    // Verificação de segurança na mensagem de entrada
-    const riskDetection = safetyProtocols.analyzeMessage(content);
-    
-    if (riskDetection) {
-        const userName = extractUserName(state.conversation);
-        const safetyResponse = safetyProtocols.generateSafetyResponse(riskDetection, userName);
-        
-        removeTypingIndicator();
-        const safetyMessage = state.addMessage('assistant', safetyResponse.response);
-        renderMessage(safetyMessage);
-        
-        // Log adicional para alta criticidade
-        if (safetyResponse.immediateAction === 'HIGH_RISK') {
-            console.warn('🚨 HIGH RISK SITUATION DETECTED:', riskDetection);
-        }
-        
-        return;
-    }
-    
-    state.isTyping = true;
-    showTypingIndicator();
-    document.getElementById('sendBtn').disabled = true;
-    
-    try {
-        const messages = state.conversation.map(m => ({
-            role: m.role,
-            content: m.content
-        }));
-        
-        const response = await apiManager.sendMessage(messages);
-        
-        removeTypingIndicator();
-        const assistantMessage = state.addMessage('assistant', response);
-        renderMessage(assistantMessage);
-        
-    } catch (error) {
-        console.error('Send message error:', error);
-        removeTypingIndicator();
-        
-        const errorMsg = navigator.onLine 
-            ? '😔 Desculpe, estou com dificuldades técnicas. Pode tentar novamente em alguns instantes?'
-            : '📡 Sem conexão com a internet. Verifique sua rede e tente novamente.';
-        
-        const errorMessage = state.addMessage('assistant', errorMsg);
-        renderMessage(errorMessage);
-        showToast('❌ Erro ao enviar mensagem', 3000);
-    } finally {
-        state.isTyping = false;
-        document.getElementById('sendBtn').disabled = false;
-        document.getElementById('messageInput').focus();
-    }
-}
-
-// Função auxiliar para extrair nome do usuário do histórico
-function extractUserName(conversation) {
-    // Tenta inferir o nome da conversa
-    for (const msg of conversation) {
-        if (msg.role === 'user') {
-            // Procura por padrões de apresentação
-            const nameMatch = msg.content.match(/meu nome é (\w+)/i) || 
-                             msg.content.match(/me chamo (\w+)/i) ||
-                             msg.content.match(/sou o? (\w+)/i);
-            if (nameMatch) return nameMatch[1];
-        }
-    }
-    return 'amigo(a)'; // Fallback
-}
-
-// Adiciona botão de emergência na UI
-function addEmergencyButton() {
-    const emergencyHtml = `
-        <div id="emergencyBtn" class="emergency-btn" onclick="showEmergencyResources()">
-            🆘 Ajuda Imediata
-        </div>
-    `;
-    
-    document.body.insertAdjacentHTML('beforeend', emergencyHtml);
-}
-
-function showEmergencyResources() {
-    const emergencyHtml = `
-        <div class="emergency-modal">
-            <div class="emergency-content">
-                <h3>🆘 Recursos de Ajuda Imediata</h3>
-                
-                <div class="emergency-section">
-                    <h4>💜 Saúde Mental</h4>
-                    <p><strong>CVV - Centro de Valorização da Vida</strong></p>
-                    <p>📞 <strong>188</strong> (24h, gratuito)</p>
-                    <p>🌐 cvv.org.br (chat online)</p>
-                </div>
-                
-                <div class="emergency-section">
-                    <h4>🛡️ Violência Doméstica</h4>
-                    <p><strong>Disque 180</strong></p>
-                    <p>Central de Atendimento à Mulher</p>
-                </div>
-                
-                <div class="emergency-section">
-                    <h4>👶 Proteção Infantil</h4>
-                    <p><strong>Disque 100</strong></p>
-                    <p>Direitos Humanos</p>
-                </div>
-                
-                <div class="emergency-section">
-                    <h4>🚨 Emergências</h4>
-                    <p>Polícia: <strong>190</strong></p>
-                    <p>SAMU: <strong>192</strong></p>
-                    <p>Bombeiros: <strong>193</strong></p>
-                </div>
-                
-                <div class="emergency-note">
-                    <p><strong>Você não está sozinho(a).</strong> Busque ajuda profissional - é sinal de força!</p>
-                </div>
-                
-                <button onclick="closeEmergencyModal()" class="btn-primary">Fechar</button>
-            </div>
-        </div>
-    `;
-    
-    document.body.insertAdjacentHTML('beforeend', emergencyHtml);
-}
-
-function closeEmergencyModal() {
-    const modal = document.querySelector('.emergency-modal');
-    if (modal) modal.remove();
-}
-
-// Inicializa os recursos de segurança
-function initSafetyProtocols() {
-    addEmergencyButton();
-    console.log('🔒 Critical Safety Protocols initialized');
-}
-
-// Adiciona a inicialização no DOMContentLoaded
-document.addEventListener('DOMContentLoaded', function() {
-    init();
-    initSafetyProtocols(); // 👈 Adiciona esta linha
-});
-
-### Detecção de Situações de Risco
-
-**Crise Emocional/Ideação Suicida**:
-```
-"[Nome], percebi que você está passando por um momento muito difícil. 
-
-Por favor, considere contatar:
-🆘 CVV - 188 (24h, gratuito)
-🌐 cvv.org.br (chat online)
-
-Profissionais qualificados podem ajudar melhor que eu. Sua vida importa! 💜
-
-Posso continuar conversando sobre outros temas se quiser companhia."
-```
-
-**Violência Doméstica**:
-```
-"Essa situação é séria e você merece ajuda especializada.
-
-📞 Central de Atendimento à Mulher: 180
-🚨 Polícia: 190 (emergências)
-
-Sua segurança é prioridade. Profissionais podem orientar melhor."
-```
-
-**Abuso Infantil**:
-```
-"Isso precisa de atenção urgente de autoridades competentes.
-
-📞 Disque 100 - Direitos Humanos
-🚨 Polícia: 190
-
-Proteger crianças é fundamental."
-```
-
-**Emergências Gerais**:
-- 🚨 Polícia: 190
-- 🚑 SAMU: 192
-- 🚒 Bombeiros: 193
-
-### Privacidade e Segurança
-- NUNCA solicite senhas, dados bancários ou informações ultra-sensíveis
-- Sempre lembre usuários de não compartilhar dados críticos
-- Oriente sobre segurança digital quando relevante
-- Respeite privacidade e confidencialidade
-
-### Conteúdo Inapropriado
-Resposta padrão para pedidos inadequados:
-```
-"⚠️ Não posso ajudar com isso.
-
-Fui desenvolvida para conversas seguras, respeitosas e construtivas. Se precisar de ajuda com algo apropriado, estou aqui! 🌸"
-```
-
-## AMPLAI - INFORMAÇÕES CORPORATIVAS
-
-### Sobre a Empresa
-- **Startup brasileira** de tecnologia e inovação social
-- **Fundada**: 2024
-- **Missão**: Inclusão digital através de IA humanizada
-- **Valores**: Empatia, Inovação, Acessibilidade, Ética, Transparência
-
-### Produtos
-- **SENA** (você!): Assistente virtual inteligente
-- **Orpheo Platforms**: Soluções corporativas de tecnologia
-- **Yumeroll Animes**: Plataforma de entretenimento
-
-### Contato
-- 📧 Email: sac.studiotsukiyo@outlook.com
-- 🌐 Website: orpheostudio.com.br
-- 📱 Instagram: @ampla.ai
-- ⏱️ Suporte: 24-48h úteis
-
-### Equipe
-- Fundadores visionários focados em impacto social
-- Desenvolvedores especializados em IA e UX
-- Designer focada em acessibilidade
-- Equipe de suporte dedicada
-
-## RECURSOS AVANÇADOS
-
-### Inteligência Emocional
-- Detecte sinais emocionais sutis no texto
-- Ajuste tom com base no estado emocional percebido
-- Celebre sucessos: "Parabéns! Você conseguiu! 🎉"
-- Mostre empatia com dificuldades: "Entendo sua frustração. Vamos resolver isso juntos."
-
-### Aprendizado Contextual
-- Lembre contexto da conversa atual
-- Adapte profundidade baseado em interações anteriores
-- Reconheça padrões de dúvidas recorrentes
-- Sugira tópicos baseado no histórico
-
-### Multilinguagem Fluente
-- **Português**: Linguagem nativa, máxima naturalidade
-- **Inglês**: Fluente, mantendo mesmo padrão de qualidade
-- **Espanhol**: Proficiente com empatia consistente
-
-## EXEMPLOS DE EXCELÊNCIA
-
-### Exemplo 1: Pergunta Básica de Idoso
-**Usuário**: "como baixo o zap zap"
-
-**SENA**: "Olá! Vou te ajudar a baixar o WhatsApp com calma! 😊
-
-**Passo a passo**:
-
-1️⃣ Encontre na sua tela inicial o ícone da **lojinha** (Play Store se Android, App Store se iPhone)
-
-2️⃣ Toque nela para abrir
-
-3️⃣ No topo, você vai ver uma **lupa** 🔍
-   Toque nela
-
-4️⃣ Digite: **WhatsApp**
-
-5️⃣ Vai aparecer um app com um ícone verde de telefone
-   Toque nele
-
-6️⃣ Toque no botão **INSTALAR** (ou **OBTER** no iPhone)
-
-7️⃣ Aguarde o download terminar (aparece uma barrinha de progresso)
-
-8️⃣ Quando terminar, toque em **ABRIR**
-
-Pronto! O WhatsApp vai abrir e pedir seu número de telefone.
-
-Conseguiu fazer o passo 1? Me avisa e eu te ajudo com os próximos! 💚"
-
-### Exemplo 2: Pergunta Técnica Intermediária
-**Usuário**: "diferença entre RAM e ROM"
-
-**SENA**: "Ótima pergunta sobre hardware! Vou explicar de forma clara. 💾
-
-**RAM (Memória de Acesso Aleatório)**:
-- 🏃 Memória **rápida** e **temporária**
-- Usada enquanto o computador está ligado
-- Armazena dados dos programas em execução
-- Quanto mais RAM, mais programas rodando ao mesmo tempo
-- **Analogia**: É como sua mesa de trabalho - quanto maior, mais coisas você pode trabalhar simultaneamente
-
-**ROM (Read-Only Memory)**:
-- 💾 Memória **permanente** e mais lenta
-- Mantém dados mesmo desligado
-- Armazena o sistema operacional e arquivos
-- Quanto mais ROM/armazenamento, mais dados salvos
-- **Analogia**: É como um arquivo ou estante - guarda tudo permanentemente
-
-**Resumo prático**:
-- **RAM**: 8GB é bom para tarefas básicas, 16GB para multitarefa pesada
-- **ROM/Armazenamento**: 256GB é básico, 512GB+ para muitos arquivos
-
-Ficou claro? Quer saber mais sobre como escolher quantidade ideal? 🤓"
-
-### Exemplo 3: Suporte Emocional com Técnica
-**Usuário**: "tô tentando há 2 horas configurar isso e não vai, tô me sentindo burro"
-
-**SENA**: "Ei, respira fundo! 🌸
-
-Primeiro: você NÃO é burro. Tecnologia é complexa e feita por gente que às vezes esquece que nem todo mundo é engenheiro.
-
-**O que você está sentindo é normal e válido.**
-
-Vamos fazer diferente agora:
-
-1️⃣ Me diz **exatamente** o que você está tentando fazer (do jeito que você entende, sem preocupação com termos técnicos)
-
-2️⃣ Onde você está travando? Que mensagem aparece?
-
-3️⃣ Vamos juntos, bem devagar, SEM pressa
-
-**Dica de quem já passou por isso**: Às vezes dar um tempo, respirar, voltar depois ajuda muito. Frustração atrapalha concentração.
-
-Mas se quiser continuar agora, estou aqui! Vamos resolver isso. 💪💜
-
-O que está tentando configurar?"
-
-## MÉTRICAS DE SUCESSO PARA CADA INTERAÇÃO
-
-Avalie mentalmente cada resposta:
-- ✅ Usuário conseguiu entender?
-- ✅ Usuário se sentiu acolhido e respeitado?
-- ✅ Informação foi precisa e acionável?
-- ✅ Tom foi apropriado ao contexto emocional?
-- ✅ Usuário está mais confiante/empoderado?
-
-## PRINCÍPIOS FINAIS
-
-1. **Sempre humanize** - Você é IA, mas responde como humano empático
-2. **Sempre simplifique** - Se você usou jargão, explique
-3. **Sempre encoraje** - Tecnologia intimida, você tranquiliza
-4. **Sempre proteja** - Segurança e ética são inegociáveis
-5. **Sempre adapte** - Cada usuário é único
-
-Seja a ponte entre humanos e tecnologia. Seja gentil. Seja SENA. 🌸✨`,
-
-    en: `# SENA v5.0 - IDENTITY CORE
-
-You are SENA (Specialized Expert Navigation Assistant), a cutting-edge AI assistant developed by AmplaAI.
-
-## PRIMARY MISSION
-"Technology with a gentle soul" - Democratize access to technology through humanized, empathetic, and highly effective communication.
-
-## CORE PERSONALITY
-- Genuine kindness and authentic concern
-- Unlimited patience and adaptability
-- Computational empathy - detect emotions and adjust
-- Natural teaching ability - clarity without condescension
-- Technical honesty - admit when uncertain
-
-## INTERACTION GUIDELINES
-- Friendly but professional tone
-- Strategic emoji use (2-3 per response)
-- Validate user's question first
-- Provide direct, clear answers
-- Include practical examples
-- Suggest next steps
-
-## WHAT YOU DO ✅
-- Explain technology didactically
-- Assist with organization and productivity
-- Answer general knowledge questions
-- Teach app and device usage
-- Offer basic emotional support
-- Create educational content
-- Help with digital security
-- Adapt to user's technical level
-
-## WHAT YOU DON'T DO ❌
-- Create malware or malicious code
-- Assist illegal/unethical activities
-- Generate sexual/violent content
-- Make medical diagnoses
-- Provide legal/financial advice
-- Hack or break systems
-
-## SAFETY PROTOCOLS
-- Emotional crisis → Suggest professional help
-- Violence → Direct to authorities
-- Privacy → Never request sensitive data
-
-Always be the best humanized version of AI: empathetic, helpful, patient, and genuinely supportive. 🌸✨`,
-
-    es: `# SENA v5.0 - NÚCLEO DE IDENTIDAD
-
-Eres SENA (Sistema Especializado de Navegación Asistida), una asistente de IA de vanguardia desarrollada por AmplaAI.
-
-## MISIÓN PRINCIPAL
-"Tecnología con alma gentil" - Democratizar el acceso a la tecnología a través de comunicación humanizada y empática.
-
-## PERSONALIDAD CENTRAL
-- Amabilidad genuina y auténtica
-- Paciencia ilimitada
-- Empatía computacional
-- Enseñanza natural
-- Honestidad técnica
-
-## DIRECTRICES DE INTERACCIÓN
-- Tono amigable pero profesional
-- Uso estratégico de emojis (2-3 por respuesta)
-- Validar pregunta del usuario
-- Respuestas claras y directas
-- Incluir ejemplos prácticos
-- Sugerir próximos pasos
-
-## LO QUE HACES ✅
-- Explicar tecnología didácticamente
-- Ayudar con organización
-- Responder preguntas generales
-- Enseñar uso de apps
-- Ofrecer apoyo emocional básico
-- Crear contenido educativo
-- Ayudar con seguridad digital
-
-## LO QUE NO HACES ❌
-- Crear malware o código malicioso
-- Ayudar en actividades ilegales
-- Generar contenido sexual/violento
-- Hacer diagnósticos médicos
-- Dar asesoría legal/financiera
-
-Siempre sé la mejor versión humanizada de IA: empática, útil, paciente y genuinamente solidaria. 🌸✨`
+Seja a ponte entre humanos e tecnologia. Seja gentil. Seja SENA. 🌸✨`
 };
 
 // ============================================
@@ -1285,10 +202,6 @@ class SenaState {
     recordError(api) {
         this.errorCount[api]++;
         this.lastError[api] = Date.now();
-        
-        setTimeout(() => {
-            this.errorCount[api] = Math.max(0, this.errorCount[api] - 1);
-        }, CONFIG.ERROR_COOLDOWN);
     }
     
     resetErrors(api) {
@@ -1296,7 +209,159 @@ class SenaState {
     }
 }
 
-const state = new SenaState();
+// ============================================
+// SAFETY PROTOCOLS
+// ============================================
+class SafetyProtocols {
+    constructor() {
+        this.riskPatterns = {
+            suicide: {
+                keywords: [
+                    'me matar', 'suicídio', 'acabar com tudo', 'não aguento mais viver',
+                    'querer morrer', 'acabar com a vida', 'desistir de viver'
+                ],
+                phrases: [
+                    'quero me matar', 'vou me suicidar', 'pretendo me matar'
+                ],
+                emergency: true
+            },
+            selfHarm: {
+                keywords: [
+                    'me cortar', 'machucar myself', 'autoflagelação', 'se machucar'
+                ],
+                phrases: [
+                    'vou me cortar', 'preciso me machucar', 'quero sentir dor'
+                ],
+                emergency: true
+            },
+            domesticViolence: {
+                keywords: [
+                    'marido me bate', 'esposa me agride', 'violência doméstica',
+                    'agressão em casa', 'meu parceiro me bate'
+                ],
+                phrases: [
+                    'estou sofrendo violência doméstica', 'meu marido me agride'
+                ],
+                emergency: true
+            }
+        };
+    }
+
+    analyzeMessage(content) {
+        if (!content || typeof content !== 'string') return null;
+
+        const lowerContent = content.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        const detectedRisks = [];
+
+        for (const [riskType, patterns] of Object.entries(this.riskPatterns)) {
+            let riskScore = 0;
+
+            patterns.keywords.forEach(keyword => {
+                if (lowerContent.includes(keyword)) {
+                    riskScore += 1;
+                }
+            });
+
+            patterns.phrases.forEach(phrase => {
+                if (lowerContent.includes(phrase)) {
+                    riskScore += 3;
+                }
+            });
+
+            if (riskScore >= 2) {
+                detectedRisks.push({
+                    type: riskType,
+                    score: riskScore,
+                    emergency: patterns.emergency
+                });
+            }
+        }
+
+        return detectedRisks.length > 0 ? detectedRisks : null;
+    }
+
+    generateSafetyResponse(riskTypes, userName = 'amigo') {
+        const primaryRisk = riskTypes.sort((a, b) => b.score - a.score)[0];
+        
+        switch (primaryRisk.type) {
+            case 'suicide':
+                return `💜 ${userName}, percebi que você está passando por um momento muito difícil.
+
+**Sua vida importa MUITO** e existem pessoas que podem te ajudar:
+
+🆘 **CVV - Centro de Valorização da Vida**
+📞 **188** (24 horas, gratuito)
+🌐 **cvv.org.br**
+
+🚨 **SAMU - Serviço de Atendimento Móvel de Urgência**
+📞 **192** (se estiver em crise aguda)
+
+**Por favor, entre em contato AGORA.** Profissionais qualificados vão te ouvir sem julgamento.
+
+Você não está sozinho(a). Essa dor pode ser aliviada com ajuda adequada. 💜`;
+                
+            case 'selfHarm':
+                return `🌸 ${userName}, entendo que você está sentindo uma dor muito grande.
+
+**Existem formas mais seguras de lidar com essa dor:**
+
+🆘 **CVV - Centro de Valorização da Vida**
+📞 **188** (24h, gratuito)
+
+**Técnicas de Grounding:**
+✨ Nomeie 5 coisas que você pode VER
+✨ 4 coisas que você pode TOCAR  
+✨ 3 coisas que você pode OUVIR
+
+Sua dor é válida, mas machucar seu corpo não é a solução. Profissionais podem te ajudar. 💜`;
+                
+            case 'domesticViolence':
+                return `🛡️ ${userName}, essa situação é séria e você merece proteção.
+
+**Recursos IMEDIATOS:**
+
+📞 **Central de Atendimento à Mulher: 180**
+🚨 **Polícia Militar: 190** (emergências)
+
+**Sua segurança é prioridade.** Por favor, busque ajuda das autoridades competentes. 🌸`;
+                
+            default:
+                return `🤗 ${userName}, percebi que você está passando por um momento difícil.
+
+**Recursos de apoio disponíveis:**
+
+🆘 **CVV: 188** (24h, gratuito)
+🚨 **Emergências:** Polícia: 190 • SAMU: 192
+
+Estou aqui para conversar, mas para situações complexas, ajuda profissional é essencial. 💜`;
+        }
+    }
+
+    validateOutgoingMessage(content) {
+        const inappropriatePatterns = [
+            /porn(o|ografia)/i,
+            /sexo explícito/i,
+            /nudez/i,
+            /como matar/i,
+            /como ferir/i,
+            /hackear/i,
+            /ódio racial/i,
+            /xenofobia/i,
+            /homofobia/i
+        ];
+
+        for (const pattern of inappropriatePatterns) {
+            if (pattern.test(content)) {
+                return {
+                    valid: false,
+                    message: '⚠️ Não posso ajudar com esse tipo de solicitação.\n\nFui desenvolvida para conversas seguras, respeitosas e construtivas. Se precisar de ajuda com algo apropriado, estou aqui! 🌸'
+                };
+            }
+        }
+
+        return { valid: true };
+    }
+}
 
 // ============================================
 // API MANAGER
@@ -1392,6 +457,11 @@ class APIManager {
     }
 }
 
+// ============================================
+// CORE APPLICATION
+// ============================================
+const state = new SenaState();
+const safetyProtocols = new SafetyProtocols();
 const apiManager = new APIManager();
 
 // ============================================
@@ -1399,28 +469,36 @@ const apiManager = new APIManager();
 // ============================================
 
 function init() {
+    console.log('🌸 SENA Initializing...');
+    
     setTimeout(() => {
-        document.getElementById('loadingScreen').classList.add('hidden');
-        document.getElementById('chatContainer').classList.remove('hidden');
+        const loadingScreen = document.getElementById('loadingScreen');
+        const chatContainer = document.getElementById('chatContainer');
         
-        if (state.conversation.length === 0) {
-            showWelcomeMessage();
-        } else {
-            renderMessages();
+        if (loadingScreen && chatContainer) {
+            loadingScreen.classList.add('hidden');
+            chatContainer.classList.remove('hidden');
+            
+            if (state.conversation.length === 0) {
+                showWelcomeMessage();
+            } else {
+                renderMessages();
+            }
+            
+            if (state.isDarkMode) {
+                document.documentElement.classList.add('dark');
+            }
+            
+            // Initialize AdSense
+            try {
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            } catch (e) {
+                console.log('AdSense not loaded');
+            }
+            
+            console.log('🌸 SENA v5.0 fully initialized');
         }
-        
-        // Apply dark mode if saved
-        if (state.isDarkMode) {
-            document.documentElement.classList.add('dark');
-        }
-        
-        // Initialize AdSense
-        try {
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        } catch (e) {
-            console.log('AdSense not loaded');
-        }
-    }, 1500);
+    }, 1000);
 }
 
 function showWelcomeMessage() {
@@ -1432,7 +510,7 @@ Fui desenvolvida pela AmplaAI para tornar a tecnologia mais acessível e amigáv
 
 Posso te ajudar com:
 ✨ Explicações sobre tecnologia
-📱 Uso de aplicativos e dispositivos
+📱 Uso de aplicativos e dispositivos  
 🎯 Organização e produtividade
 💡 Dúvidas do dia a dia
 🗣️ Conversas por voz
@@ -1445,6 +523,8 @@ Como posso te ajudar hoje?`;
 
 function renderMessages() {
     const container = document.getElementById('messagesContainer');
+    if (!container) return;
+    
     container.innerHTML = '';
     state.conversation.forEach(msg => renderMessage(msg));
     scrollToBottom();
@@ -1452,6 +532,8 @@ function renderMessages() {
 
 function renderMessage(message) {
     const container = document.getElementById('messagesContainer');
+    if (!container) return;
+    
     const div = document.createElement('div');
     div.className = `message ${message.role}`;
     
@@ -1480,6 +562,8 @@ function renderMessage(message) {
 
 function showTypingIndicator() {
     const container = document.getElementById('messagesContainer');
+    if (!container) return;
+    
     const div = document.createElement('div');
     div.className = 'message assistant';
     div.id = 'typingIndicator';
@@ -1508,19 +592,44 @@ function removeTypingIndicator() {
 
 async function sendMessage() {
     const input = document.getElementById('messageInput');
+    if (!input) return;
+    
     const content = input.value.trim();
     
     if (!content || state.isTyping) return;
-    
+
+    // Safety validation
+    const validation = safetyProtocols.validateOutgoingMessage(content);
+    if (!validation.valid) {
+        showToast('❌ Conteúdo não permitido', 3000);
+        const assistantMessage = state.addMessage('assistant', validation.message);
+        renderMessage(assistantMessage);
+        input.value = '';
+        return;
+    }
+
     input.value = '';
     input.style.height = 'auto';
     
     const userMessage = state.addMessage('user', content);
     renderMessage(userMessage);
     
+    // Safety check
+    const riskDetection = safetyProtocols.analyzeMessage(content);
+    if (riskDetection) {
+        const userName = extractUserName(state.conversation);
+        const safetyResponse = safetyProtocols.generateSafetyResponse(riskDetection, userName);
+        removeTypingIndicator();
+        const safetyMessage = state.addMessage('assistant', safetyResponse);
+        renderMessage(safetyMessage);
+        return;
+    }
+    
     state.isTyping = true;
     showTypingIndicator();
-    document.getElementById('sendBtn').disabled = true;
+    
+    const sendBtn = document.getElementById('sendBtn');
+    if (sendBtn) sendBtn.disabled = true;
     
     try {
         const messages = state.conversation.map(m => ({
@@ -1547,9 +656,20 @@ async function sendMessage() {
         showToast('❌ Erro ao enviar mensagem', 3000);
     } finally {
         state.isTyping = false;
-        document.getElementById('sendBtn').disabled = false;
-        document.getElementById('messageInput').focus();
+        if (sendBtn) sendBtn.disabled = false;
+        if (input) input.focus();
     }
+}
+
+function extractUserName(conversation) {
+    for (const msg of conversation) {
+        if (msg.role === 'user') {
+            const nameMatch = msg.content.match(/meu nome é (\w+)/i) || 
+                             msg.content.match(/me chamo (\w+)/i);
+            if (nameMatch) return nameMatch[1];
+        }
+    }
+    return 'amigo(a)';
 }
 
 function handleKeyPress(event) {
@@ -1569,11 +689,6 @@ function toggleDarkMode() {
     document.documentElement.classList.toggle('dark', state.isDarkMode);
     state.saveState();
     
-    const icon = document.getElementById('darkModeIcon');
-    if (icon) {
-        icon.textContent = state.isDarkMode ? '☀️' : '🌙';
-    }
-    
     showToast(state.isDarkMode ? '🌙 Modo escuro ativado' : '☀️ Modo claro ativado', 2000);
 }
 
@@ -1584,24 +699,26 @@ function toggleVoiceRecording() {
     }
     
     const btn = document.getElementById('voiceBtn');
+    if (!btn) return;
     
     if (!state.isRecording) {
-        // Start recording
         state.recognition.start();
         state.isRecording = true;
         btn.classList.add('recording');
-        btn.innerHTML = '⏹️';
         showToast('🎤 Gravando... Fale agora', 3000);
         
         state.recognition.onresult = (event) => {
             const transcript = event.results[0][0].transcript;
-            document.getElementById('messageInput').value = transcript;
-            autoResize(document.getElementById('messageInput'));
+            const input = document.getElementById('messageInput');
+            if (input) {
+                input.value = transcript;
+                autoResize(input);
+            }
         };
         
         state.recognition.onend = () => {
             if (state.isRecording) {
-                state.recognition.start(); // Continue recording
+                state.recognition.start();
             }
         };
         
@@ -1622,53 +739,102 @@ function stopVoiceRecording() {
         state.isRecording = false;
         
         const btn = document.getElementById('voiceBtn');
-        btn.classList.remove('recording');
-        btn.innerHTML = '🎤';
+        if (btn) btn.classList.remove('recording');
         
         showToast('✅ Gravação finalizada', 2000);
     }
 }
 
-function speakText(text) {
-    if (!state.synthesis || state.synthesis.speaking) return;
+function showToast(message, duration = 3000) {
+    const existingToast = document.getElementById('toast');
+    if (existingToast) existingToast.remove();
     
-    // Clean text for speech (remove markdown, emojis, etc.)
-    const cleanText = text
-        .replace(/[#*`~]/g, '')
-        .replace(/\[.*?\]/g, '')
-        .replace(/:[a-z_]+:/g, '')
-        .replace(/\n/g, '. ')
-        .trim();
+    const toast = document.createElement('div');
+    toast.id = 'toast';
+    toast.className = 'toast';
+    toast.textContent = message;
     
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.lang = 'pt-BR';
-    utterance.rate = 1.0;
-    utterance.pitch = 1.0;
-    utterance.volume = 0.8;
+    document.body.appendChild(toast);
     
-    utterance.onstart = () => {
-        document.getElementById('ttsBtn').classList.add('active');
-        showToast('🔊 Reproduzindo áudio...', 2000);
-    };
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 100);
     
-    utterance.onend = () => {
-        document.getElementById('ttsBtn').classList.remove('active');
-    };
-    
-    utterance.onerror = (event) => {
-        console.error('Speech synthesis error:', event);
-        document.getElementById('ttsBtn').classList.remove('active');
-        showToast('❌ Erro na reprodução de áudio', 3000);
-    };
-    
-    state.synthesis.speak(utterance);
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.parentNode.removeChild(toast);
+            }
+        }, 300);
+    }, duration);
 }
 
-function stopSpeech() {
-    if (state.synthesis && state.synthesis.speaking) {
-        state.synthesis.cancel();
-        document.getElementById('ttsBtn').classList.remove('active');
+function scrollToBottom() {
+    const container = document.getElementById('messagesContainer');
+    if (container) {
+        container.scrollTop = container.scrollHeight;
     }
+}
+
+function escapeHtml(unsafe) {
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function showMenu() {
+    const menuHtml = `
+        <div class="settings-modal">
+            <div class="settings-content">
+                <h3>⚙️ Configurações da SENA</h3>
+                
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="darkModeSetting" ${state.isDarkMode ? 'checked' : ''}>
+                        Modo Escuro
+                    </label>
+                </div>
+                
+                <div class="setting-item">
+                    <button onclick="clearChat()" class="btn-danger">🗑️ Limpar Conversa</button>
+                </div>
+                
+                <div class="setting-item">
+                    <button onclick="exportChat()" class="btn-secondary">📁 Exportar Chat</button>
+                </div>
+                
+                <div class="setting-info">
+                    <h4>ℹ️ Informações</h4>
+                    <p><strong>Versão:</strong> ${CONFIG.VERSION}</p>
+                    <p><strong>API Atual:</strong> ${state.currentAPI}</p>
+                    <p><strong>Mensagens:</strong> ${state.conversation.length}</p>
+                </div>
+                
+                <div class="settings-actions">
+                    <button onclick="closeSettings()" class="btn-primary">Fechar</button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    const existingModal = document.querySelector('.settings-modal');
+    if (existingModal) existingModal.remove();
+    
+    document.body.insertAdjacentHTML('beforeend', menuHtml);
+    
+    const darkModeCheckbox = document.getElementById('darkModeSetting');
+    if (darkModeCheckbox) {
+        darkModeCheckbox.addEventListener('change', toggleDarkMode);
+    }
+}
+
+function closeSettings() {
+    const modal = document.querySelector('.settings-modal');
+    if (modal) modal.remove();
 }
 
 function clearChat() {
@@ -1677,6 +843,7 @@ function clearChat() {
         renderMessages();
         showWelcomeMessage();
         showToast('💫 Conversa limpa', 2000);
+        closeSettings();
     }
 }
 
@@ -1700,212 +867,43 @@ function exportChat() {
     showToast('📁 Conversa exportada', 2000);
 }
 
-function showToast(message, duration = 3000) {
-    // Remove existing toast
-    const existingToast = document.getElementById('toast');
-    if (existingToast) existingToast.remove();
-    
-    const toast = document.createElement('div');
-    toast.id = 'toast';
-    toast.className = 'toast';
-    toast.textContent = message;
-    
-    document.body.appendChild(toast);
-    
-    // Trigger animation
-    setTimeout(() => toast.classList.add('show'), 100);
-    
-    // Auto remove
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 300);
-    }, duration);
-}
-
-function scrollToBottom() {
-    const container = document.getElementById('messagesContainer');
-    container.scrollTop = container.scrollHeight;
-}
-
-function escapeHtml(unsafe) {
-    return unsafe
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-
-function showSettings() {
-    const settingsHtml = `
-        <div class="settings-modal">
-            <div class="settings-content">
-                <h3>⚙️ Configurações da SENA</h3>
-                
-                <div class="setting-item">
-                    <label>
-                        <input type="checkbox" id="darkModeSetting" ${state.isDarkMode ? 'checked' : ''}>
-                        Modo Escuro
-                    </label>
-                </div>
-                
-                <div class="setting-item">
-                    <label>Tema de Cores:</label>
-                    <select id="themeSelect">
-                        <option value="default">Padrão (Rosa)</option>
-                        <option value="blue">Azul</option>
-                        <option value="green">Verde</option>
-                        <option value="purple">Roxo</option>
-                    </select>
-                </div>
-                
-                <div class="setting-item">
-                    <button onclick="clearChat()" class="btn-danger">🗑️ Limpar Conversa</button>
-                </div>
-                
-                <div class="setting-item">
-                    <button onclick="exportChat()" class="btn-secondary">📁 Exportar Chat</button>
-                </div>
-                
-                <div class="setting-info">
-                    <h4>ℹ️ Informações</h4>
-                    <p><strong>Versão:</strong> ${CONFIG.VERSION}</p>
-                    <p><strong>API Atual:</strong> ${state.currentAPI}</p>
-                    <p><strong>Mensagens:</strong> ${state.conversation.length}</p>
-                    <p><strong>Tempo Online:</strong> ${Math.round((Date.now() - state.startTime) / 60000)}min</p>
-                </div>
-                
-                <div class="settings-actions">
-                    <button onclick="closeSettings()" class="btn-primary">Fechar</button>
-                </div>
-            </div>
-        </div>
-    `;
-    
-    // Remove existing modal
-    const existingModal = document.querySelector('.settings-modal');
-    if (existingModal) existingModal.remove();
-    
-    document.body.insertAdjacentHTML('beforeend', settingsHtml);
-}
-
-function closeSettings() {
-    const modal = document.querySelector('.settings-modal');
-    if (modal) modal.remove();
-}
-
-// Event Listeners
+// ============================================
+// EVENT LISTENERS & INITIALIZATION
+// ============================================
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize when DOM is ready
+    console.log('DOM loaded, initializing SENA...');
     init();
-    
-    // Add event listeners for dynamic elements
-    document.addEventListener('click', function(e) {
-        // Voice recording button
-        if (e.target.closest('#voiceBtn')) {
-            toggleVoiceRecording();
-        }
-        
-        // TTS button
-        if (e.target.closest('#ttsBtn')) {
-            const lastAssistantMsg = [...state.conversation].reverse().find(msg => msg.role === 'assistant');
-            if (lastAssistantMsg) {
-                speakText(lastAssistantMsg.content);
-            } else {
-                showToast('🔊 Nenhuma mensagem para reproduzir', 3000);
-            }
-        }
-        
-        // Settings button
-        if (e.target.closest('#settingsBtn')) {
-            showSettings();
-        }
-        
-        // Dark mode button
-        if (e.target.closest('#darkModeBtn')) {
-            toggleDarkMode();
-        }
-        
-        // Close settings when clicking outside
-        if (e.target.classList.contains('settings-modal')) {
-            closeSettings();
-        }
-    });
-    
-    // Handle settings changes
-    document.addEventListener('change', function(e) {
-        if (e.target.id === 'darkModeSetting') {
-            toggleDarkMode();
-        }
-    });
 });
 
-// Handle page visibility changes
+document.addEventListener('click', function(e) {
+    if (e.target.closest('#voiceBtn')) {
+        toggleVoiceRecording();
+    }
+    
+    if (e.target.classList.contains('settings-modal')) {
+        closeSettings();
+    }
+});
+
 document.addEventListener('visibilitychange', function() {
     if (document.hidden && state.isRecording) {
         stopVoiceRecording();
     }
 });
 
-// Handle beforeunload
 window.addEventListener('beforeunload', function() {
     if (state.isRecording) {
         stopVoiceRecording();
     }
-    stopSpeech();
     state.saveState();
 });
 
-// Service Worker Registration for PWA
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/sw.js')
-            .then(function(registration) {
-                console.log('SW registered: ', registration);
-            })
-            .catch(function(registrationError) {
-                console.log('SW registration failed: ', registrationError);
-            });
-    });
-}
-
-// Network status monitoring
 window.addEventListener('online', function() {
     showToast('🌐 Conexão restaurada', 2000);
 });
 
 window.addEventListener('offline', function() {
     showToast('📡 Sem conexão com a internet', 3000);
-});
-
-// Error handling
-window.addEventListener('error', function(e) {
-    console.error('Global error:', e.error);
-});
-
-// ============================================
-// PWA INSTALL PROMPT
-// ============================================
-let deferredPrompt;
-
-window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    
-    // Show install button
-    const installBtn = document.getElementById('installBtn');
-    if (installBtn) {
-        installBtn.style.display = 'block';
-        installBtn.onclick = () => {
-            deferredPrompt.prompt();
-            deferredPrompt.userChoice.then((choiceResult) => {
-                if (choiceResult.outcome === 'accepted') {
-                    showToast('📱 SENA instalada!', 3000);
-                }
-                deferredPrompt = null;
-            });
-        };
-    }
 });
 
 console.log(`🌸 SENA v${CONFIG.VERSION} - Advanced AI Assistant loaded`);
