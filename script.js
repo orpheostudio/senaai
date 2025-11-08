@@ -13,7 +13,7 @@ const CONFIG = {
     
     // DeepSeek API (Primary)
     DEEPSEEK: {
-        KEY: 'sk-or-v1-your-deepseek-key-here',
+        KEY: 'sk-09e81935a804474da3d444a57ec90e48',
         ENDPOINT: 'https://api.deepseek.com/v1/chat/completions',
         MODEL: 'deepseek-chat',
         MAX_TOKENS: 4096,
