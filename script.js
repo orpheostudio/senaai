@@ -1,5 +1,5 @@
 // =============================================
-// AURA CHAT - VERSÃO COMPLETA PARA PRODUÇÃO
+// Sena CHAT - VERSÃO COMPLETA PARA PRODUÇÃO
 // =============================================
 
 // ========== CONFIGURAÇÕES ==========
@@ -1344,8 +1344,8 @@ function showAbout() {
       <h2>Aura AI Assistant</h2>
       <p style="color: var(--text-secondary); margin: 16px 0;">Versão 1.0.0</p>
       <p style="line-height: 1.6; margin-bottom: 20px;">
-        Desenvolvido com ❤️ pela <strong>Orpheo Studio</strong><br>
-        Powered by Mistral AI
+        Desenvolvido com ❤️ pela <strong>AmplaAI</strong><br>
+        Alimentada por CodexAI V1.0
       </p>
       <div style="display: flex; gap: 12px; justify-content: center; margin-top: 24px;">
         <a href="https://termos.orpheostudio.com.br" target="_blank" class="btn-secondary">Termos</a>
@@ -1514,4 +1514,4 @@ if (document.readyState === 'loading') {
   initialize();
 }
 
-console.log("🤖 Aura Chat carregado!");
+console.log("🤖 Sena Chat carregado!");
