@@ -3,317 +3,600 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sena by AmplaAI</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta name="description" content="Sena - Tecnologia com alma gentil." />
+  <meta name="keywords" content="IA, assistente virtual, chatbot, inteligência artificial, Sena, AmplaAI" />
+  <meta name="author" content="AmplaAI" />
+  <meta name="theme-color" content="#212121" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Sena - Assistente IA" />
+  <meta property="og:description" content="Converse com Sena, sua assistente de IA inteligente e empática." />
+  <meta property="og:image" content="https://i.imgur.com/JoB5Aoa.jpeg" />
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Sena - Assistente IA" />
+  <meta property="twitter:description" content="Converse com Sena, sua assistente de IA inteligente e empática." />
+  
+  <title>Sena - Assistente IA | AmplaAI</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <!-- Styles -->
   <link rel="stylesheet" href="style.css" />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://i.imgur.com/JoB5Aoa.jpeg" />
   
   <!-- Microsoft Clarity -->
   <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
-      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "YOUR_CLARITY_ID");
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "tlya8thx8r");
   </script>
 
   <!-- Google AdSense -->
-  <script data-ad-client="ca-pub-YOUR_ADSENSE_ID" async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID"
+     crossorigin="anonymous"></script>
 </head>
 <body>
+  <!-- Splash Screen -->
+  <div id="splashScreen" class="splash-screen">
+    <div class="splash-content">
+      <div class="splash-logo">
+        <i class="fas fa-robot"></i>
+      </div>
+      <h1 class="splash-title">Sena</h1>
+      <p class="splash-subtitle">Tecnologia com alma gentil.</p>
+      <div class="splash-loader">
+        <div class="loader-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
   <header>
-    <div class="logo">
-  <img src="https://i.imgur.com/JoB5Aoa.jpeg" alt="Logo Sena">
-  <span>Sena</span>
-</div>
-        <div class="status-indicator">
-          <span class="status-dot"></span>
-          <span>Online</span>
+    <div class="header-container">
+      <div class="header-left">
+        <button id="sidebarToggle" class="nav-btn sidebar-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
+        
+        <div class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-robot"></i>
+          </div>
+          <span class="logo-text">Sena</span>
+          <span class="logo-badge">AI</span>
         </div>
       </div>
       
-      <div class="header-links">
-        <nav class="header-nav">
-          <a href="https://termos.orpheostudio.com.br" target="_blank">
-            <i class="fas fa-file-contract"></i>
-            Termos
-          </a>
-          <a href="https://politicas.orpheostudio.com.br" target="_blank">
-            <i class="fas fa-shield-alt"></i>
-            Políticas
-          </a>
-          <a href="#" id="themeToggle">
-            <i class="fas fa-moon"></i>
-            Tema
-          </a>
-        </nav>
-        <button class="login">
-          <i class="fas fa-user"></i>
-          Login
+      <nav class="header-nav">
+        <button id="newChatBtn" class="nav-btn" title="Nova conversa (Ctrl+N)">
+          <i class="fas fa-plus"></i>
+          <span class="nav-text">Nova</span>
         </button>
-      </div>
+        
+        <button id="historyBtn" class="nav-btn" title="Histórico">
+          <i class="fas fa-history"></i>
+          <span class="nav-text">Histórico</span>
+        </button>
+        
+        <div class="nav-divider"></div>
+        
+        <button id="statsBtn" class="nav-btn" title="Estatísticas">
+          <i class="fas fa-chart-line"></i>
+          <span class="nav-text">Stats</span>
+        </button>
+        
+        <button id="settingsBtn" class="nav-btn" title="Configurações">
+          <i class="fas fa-cog"></i>
+          <span class="nav-text">Config</span>
+        </button>
+        
+        <button id="themeToggle" class="nav-btn" title="Alternar tema">
+          <i class="fas fa-moon"></i>
+        </button>
+      </nav>
     </div>
   </header>
 
-  <main>
-    <!-- Sidebar para histórico -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-header">
-        <h3>Histórico</h3>
-        <button class="sidebar-close" id="sidebarClose">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <div class="conversation-list" id="conversationList">
-        <!-- Histórico de conversas será carregado aqui -->
-      </div>
-    </aside>
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <h3><i class="fas fa-history"></i> Histórico de Conversas</h3>
+      <button id="closeSidebar" class="sidebar-close">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <div class="sidebar-search">
+      <i class="fas fa-search"></i>
+      <input type="text" id="searchHistory" placeholder="Buscar conversas..." />
+    </div>
+    
+    <div class="sidebar-content" id="sidebarContent">
+      <!-- Conversas serão carregadas aqui -->
+    </div>
+    
+    <div class="sidebar-footer">
+      <button id="clearAllHistory" class="btn-danger-outline">
+        <i class="fas fa-trash"></i>
+        Limpar Tudo
+      </button>
+    </div>
+  </aside>
 
-    <div class="main-content">
-      <div class="avatar-container">
-        <div class="avatar">
-          <img src="https://i.imgur.com/JoB5Aoa.jpeg" alt="Sena Avatar" />
-          <div class="avatar-status"></div>
+  <!-- Main Content -->
+  <main class="chat-wrapper">
+    <!-- Welcome Screen -->
+    <div id="welcomeScreen" class="welcome-screen">
+      <div class="welcome-content">
+        <div class="welcome-avatar">
+          <img src="https://i.imgur.com/JoB5Aoa.jpeg" alt="Aura" />
+          <div class="avatar-pulse"></div>
         </div>
-        <div class="welcome-text">
-          <h2>Oi! Eu sou a Sena</h2>
-          <p>Como posso te ajudar hoje?</p>
-        </div>
-      </div>
-
-      <!-- Estatísticas em tempo real -->
-      <div class="stats-container">
-        <div class="stat-item">
-          <i class="fas fa-comments"></i>
-          <span id="messageCount">0 mensagens</span>
-        </div>
-        <div class="stat-item">
-          <i class="fas fa-clock"></i>
-          <span id="sessionTime">00:00</span>
-        </div>
-        <div class="stat-item">
-          <i class="fas fa-brain"></i>
-          <span id="modelStatus">Conectado</span>
-        </div>
-      </div>
-
-      <div class="chat-container">
-        <div class="chat-header">
-          <div class="chat-controls">
-            <button id="sidebarToggle" class="control-btn" title="Histórico">
-              <i class="fas fa-history"></i>
+        <h1 class="welcome-title">Olá, eu sou Sena! 👋</h1>
+        <p class="welcome-description">Sua assistente de IA para responder perguntas, ajudar em tarefas e muito mais.</p>
+        
+        <div class="quick-actions">
+          <h3>Comece com algo como:</h3>
+          <div class="suggestion-cards">
+            <button class="suggestion-card" data-prompt="Explique como funciona a inteligência artificial">
+              <i class="fas fa-brain"></i>
+              <span>Como funciona a IA?</span>
             </button>
-            <button id="clearChatBtn" class="control-btn" title="Limpar conversa">
-              <i class="fas fa-trash"></i>
+            <button class="suggestion-card" data-prompt="Me ajude a escrever um e-mail profissional">
+              <i class="fas fa-envelope"></i>
+              <span>Escrever e-mail</span>
             </button>
-            <button id="exportChatBtn" class="control-btn" title="Exportar conversa">
-              <i class="fas fa-download"></i>
+            <button class="suggestion-card" data-prompt="Quais são as políticas de privacidade?">
+              <i class="fas fa-shield-alt"></i>
+              <span>Privacidade</span>
             </button>
-            <button id="settingsBtn" class="control-btn" title="Configurações">
-              <i class="fas fa-cog"></i>
+            <button class="suggestion-card" data-prompt="Me conte uma curiosidade interessante">
+              <i class="fas fa-lightbulb"></i>
+              <span>Curiosidade</span>
             </button>
           </div>
         </div>
-        
-        <div id="responseArea" class="response-area">
-          <!-- Mensagens aparecerão aqui -->
-        </div>
-        
-        <!-- Sugestões rápidas -->
-        <div class="quick-suggestions" id="quickSuggestions">
-          <button class="suggestion-btn" data-prompt="Explique como funciona a privacidade">
-            <i class="fas fa-shield-alt"></i>
-            Privacidade
-          </button>
-          <button class="suggestion-btn" data-prompt="Quais são os termos de uso">
-            <i class="fas fa-file-alt"></i>
-            Termos
-          </button>
-          <button class="suggestion-btn" data-prompt="Como você processa minhas perguntas">
-            <i class="fas fa-cogs"></i>
-            Funcionamento
-          </button>
-        </div>
-        
-        <div id="typingIndicator" class="typing-indicator">
-          <div class="typing-avatar">
-            <img src="https://i.imgur.com/JoB5Aoa.jpeg" alt="Sena Avatar" />
-          </div>
-          <div class="typing-content">
-            <span class="typing-text">Sena está digitando</span>
-            <div class="typing-dots">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-          </div>
-        </div>
-        
-        <div class="chat-input-container">
-          <div class="input-actions">
-            <button id="voiceInputBtn" class="action-btn" title="Entrada por voz">
-              <i class="fas fa-microphone"></i>
-            </button>
-            <button id="attachFileBtn" class="action-btn" title="Anexar arquivo">
-              <i class="fas fa-paperclip"></i>
-            </button>
-          </div>
-          <input type="text" id="userInput" placeholder="Pergunte-me qualquer coisa..." />
-          <button id="sendBtn" class="send-btn">
-            <i class="fas fa-paper-plane"></i>
-          </button>
-        </div>
       </div>
+    </div>
 
-      <!-- Recursos adicionais -->
-      <div class="features-grid">
-        <div class="feature-card">
-          <i class="fas fa-bolt"></i>
-          <h4>Resposta Rápida</h4>
-          <p>Processamento otimizado para respostas instantâneas</p>
+    <!-- Área de mensagens -->
+    <div class="messages" id="responseArea">
+      <!-- Mensagens aparecerão aqui dinamicamente -->
+    </div>
+
+    <!-- Indicador de digitação -->
+    <div id="typingIndicator" class="typing-indicator" style="display: none;">
+      <div>
+        <div class="typing-avatar">
+          <img src="https://i.imgur.com/JoB5Aoa.jpeg" alt="Sena" />
         </div>
-        <div class="feature-card">
-          <i class="fas fa-shield-alt"></i>
-          <h4>Seguro</h4>
-          <p>Conversas protegidas e privadas</p>
-        </div>
-        <div class="feature-card">
-          <i class="fas fa-infinity"></i>
-          <h4>Contexto Ilimitado</h4>
-          <p>Mantém o contexto da conversa</p>
+        <div class="typing-content">
+          <span class="typing-name">Sena</span>
+          <div class="typing-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
         </div>
       </div>
     </div>
   </main>
 
- <footer>
- <div class="logo">
-  <img src="https://i.imgur.com/JoB5Aoa.jpeg" alt="Logo Sena">
-  <span>Sena</span>
-</div>
-        <p>Tecnologia com alma gentil criada pela AmplaAI</p>
-        <div class="footer-references">
-          <p>Referências importantes:</p>
-          <div class="reference-links">
-            <a href="https://termos.orpheostudio.com.br" target="_blank" class="reference-link">
-              <i class="fas fa-file-contract"></i>
-              Termos de Uso
-            </a>
-            <a href="https://politicas.orpheostudio.com.br" target="_blank" class="reference-link">
-              <i class="fas fa-shield-alt"></i>
-              Política de Privacidade
-            </a>
+  <!-- Área de input fixa -->
+  <div class="input-area">
+    <div class="input-container">
+      <!-- AdSense - Banner superior do input -->
+      <div class="ad-container ad-input-top">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+             data-ad-slot="YOUR_AD_SLOT"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+      
+      <div class="input-box">
+        <button id="attachBtn" class="input-action-btn" title="Anexar arquivo">
+          <i class="fas fa-paperclip"></i>
+        </button>
+        
+        <textarea 
+          id="userInput" 
+          placeholder="Envie uma mensagem para Aura..."
+          rows="1"
+          maxlength="4000"
+        ></textarea>
+        
+        <div class="input-actions">
+          <button id="voiceBtn" class="input-action-btn" title="Entrada por voz">
+            <i class="fas fa-microphone"></i>
+          </button>
+          
+          <button id="emojiBtn" class="input-action-btn" title="Emojis">
+            <i class="fas fa-smile"></i>
+          </button>
+          
+          <button id="sendBtn" class="send-btn" title="Enviar mensagem (Enter)">
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+      
+      <div class="input-info">
+        <span class="char-count" id="charCount">0 / 4000</span>
+        <button id="clearInputBtn" class="clear-input-btn" title="Limpar texto">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botões flutuantes -->
+  <div class="floating-buttons">
+    <button id="scrollToBottomBtn" class="floating-btn" title="Ir para o final" style="display: none;">
+      <i class="fas fa-chevron-down"></i>
+    </button>
+    
+    <button id="exportBtn" class="floating-btn" title="Exportar conversa">
+      <i class="fas fa-download"></i>
+    </button>
+    
+    <button id="clearBtn" class="floating-btn" title="Limpar conversa">
+      <i class="fas fa-trash"></i>
+    </button>
+  </div>
+
+  <!-- Modal de Histórico -->
+  <div id="historyModal" class="modal" style="display: none;">
+    <div class="modal-overlay" id="historyModalOverlay"></div>
+    <div class="modal-content modal-history">
+      <div class="modal-header">
+        <h3>
+          <i class="fas fa-history"></i>
+          Histórico de Conversas
+        </h3>
+        <button class="modal-close" id="historyModalClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="history-filters">
+          <button class="filter-btn active" data-filter="all">Todas</button>
+          <button class="filter-btn" data-filter="today">Hoje</button>
+          <button class="filter-btn" data-filter="week">Esta Semana</button>
+          <button class="filter-btn" data-filter="month">Este Mês</button>
+        </div>
+        
+        <div id="historyList" class="history-list">
+          <!-- Histórico será carregado aqui -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Estatísticas -->
+  <div id="statsModal" class="modal" style="display: none;">
+    <div class="modal-overlay" id="statsModalOverlay"></div>
+    <div class="modal-content modal-stats">
+      <div class="modal-header">
+        <h3>
+          <i class="fas fa-chart-line"></i>
+          Estatísticas Detalhadas
+        </h3>
+        <button class="modal-close" id="statsModalClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="stats-overview">
+          <div class="stat-highlight">
+            <div class="stat-highlight-icon">
+              <i class="fas fa-fire"></i>
+            </div>
+            <div class="stat-highlight-content">
+              <span class="stat-highlight-value" id="streakDays">0</span>
+              <span class="stat-highlight-label">Dias consecutivos</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="stats-grid">
+          <div class="stat-card stat-card-primary">
+            <div class="stat-icon">
+              <i class="fas fa-comments"></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-value" id="statTotalMessages">0</div>
+              <div class="stat-label">Total de Mensagens</div>
+            </div>
+          </div>
+          
+          <div class="stat-card stat-card-success">
+            <div class="stat-icon">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-value" id="statUserMessages">0</div>
+              <div class="stat-label">Suas Mensagens</div>
+            </div>
+          </div>
+          
+          <div class="stat-card stat-card-info">
+            <div class="stat-icon">
+              <i class="fas fa-robot"></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-value" id="statAiMessages">0</div>
+              <div class="stat-label">Respostas da Sena</div>
+            </div>
+          </div>
+          
+          <div class="stat-card stat-card-warning">
+            <div class="stat-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-value" id="statAvgResponse">0ms</div>
+              <div class="stat-label">Tempo Médio</div>
+            </div>
+          </div>
+          
+          <div class="stat-card stat-card-purple">
+            <div class="stat-icon">
+              <i class="fas fa-calendar"></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-value" id="statSessions">0</div>
+              <div class="stat-label">Sessões</div>
+            </div>
+          </div>
+          
+          <div class="stat-card stat-card-danger">
+            <div class="stat-icon">
+              <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-value" id="statErrors">0</div>
+              <div class="stat-label">Erros</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- AdSense - Banner no modal de stats -->
+        <div class="ad-container ad-modal">
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+               data-ad-slot="YOUR_AD_SLOT"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+        
+        <div class="stats-actions">
+          <button id="resetStatsBtn" class="btn-danger-outline">
+            <i class="fas fa-redo"></i>
+            Resetar Estatísticas
+          </button>
+          <button id="exportStatsBtn" class="btn-secondary">
+            <i class="fas fa-download"></i>
+            Exportar Dados
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Configurações -->
+  <div id="settingsModal" class="modal" style="display: none;">
+    <div class="modal-overlay" id="settingsModalOverlay"></div>
+    <div class="modal-content modal-settings">
+      <div class="modal-header">
+        <h3>
+          <i class="fas fa-cog"></i>
+          Configurações Avançadas
+        </h3>
+        <button class="modal-close" id="settingsModalClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="settings-tabs">
+          <button class="settings-tab active" data-tab="general">
+            <i class="fas fa-sliders-h"></i>
+            Geral
+          </button>
+          <button class="settings-tab" data-tab="appearance">
+            <i class="fas fa-palette"></i>
+            Aparência
+          </button>
+          <button class="settings-tab" data-tab="advanced">
+            <i class="fas fa-cogs"></i>
+            Avançado
+          </button>
+        </div>
+        
+        <div class="settings-content">
+          <!-- Tab: Geral -->
+          <div class="settings-tab-content active" data-tab-content="general">
+            <div class="settings-section">
+              <h4><i class="fas fa-brain"></i> Modelo de IA</h4>
+              <select id="modelSelect" class="settings-select">
+                <option value="mistral-small-latest">Sena Small - Rápido e eficiente</option>
+                <option value="mistral-medium-latest">Mira V1 - Balanceado</option>
+                <option value="mistral-large-latest">Codex V1 - Máxima qualidade</option>
+              </select>
+              <p class="settings-description">Escolha o modelo de IA para as respostas</p>
+            </div>
+            
+            <div class="settings-section">
+              <h4><i class="fas fa-keyboard"></i> Velocidade de Digitação</h4>
+              <div class="settings-slider">
+                <input type="range" id="typingSpeedSlider" min="0" max="100" value="30" />
+                <span id="typingSpeedValue">30ms</span>
+              </div>
+              <p class="settings-description">0 = instantâneo, 100 = mais lento</p>
+            </div>
+            
+            <div class="settings-section">
+              <h4><i class="fas fa-layer-group"></i> Limite de Contexto</h4>
+              <div class="settings-slider">
+                <input type="range" id="contextLimitSlider" min="5" max="20" value="10" />
+                <span id="contextLimitValue">10 mensagens</span>
+              </div>
+              <p class="settings-description">Mensagens anteriores para contexto</p>
+            </div>
+          </div>
+          
+          <!-- Tab: Aparência -->
+          <div class="settings-tab-content" data-tab-content="appearance">
+            <div class="settings-section">
+              <h4><i class="fas fa-moon"></i> Tema</h4>
+              <div class="theme-selector">
+                <button class="theme-option active" data-theme="dark">
+                  <i class="fas fa-moon"></i>
+                  <span>Escuro</span>
+                </button>
+                <button class="theme-option" data-theme="light">
+                  <i class="fas fa-sun"></i>
+                  <span>Claro</span>
+                </button>
+                <button class="theme-option" data-theme="auto">
+                  <i class="fas fa-adjust"></i>
+                  <span>Auto</span>
+                </button>
+              </div>
+            </div>
+            
+            <div class="settings-section">
+              <h4><i class="fas fa-text-height"></i> Tamanho da Fonte</h4>
+              <div class="settings-slider">
+                <input type="range" id="fontSizeSlider" min="12" max="20" value="16" />
+                <span id="fontSizeValue">16px</span>
+              </div>
+            </div>
+            
+            <div class="settings-section">
+              <h4><i class="fas fa-palette"></i> Cor de Destaque</h4>
+              <div class="color-picker">
+                <button class="color-option active" data-color="#19c37d" style="background: #19c37d;"></button>
+                <button class="color-option" data-color="#007aff" style="background: #007aff;"></button>
+                <button class="color-option" data-color="#ff3b30" style="background: #ff3b30;"></button>
+                <button class="color-option" data-color="#ff9500" style="background: #ff9500;"></button>
+                <button class="color-option" data-color="#af52de" style="background: #af52de;"></button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Tab: Avançado -->
+          <div class="settings-tab-content" data-tab-content="advanced">
+            <div class="settings-section">
+              <h4><i class="fas fa-toggle-on"></i> Preferências</h4>
+              <label class="settings-checkbox">
+                <input type="checkbox" id="enableMarkdown" checked />
+                <span><i class="fab fa-markdown"></i> Habilitar formatação Markdown</span>
+              </label>
+              
+              <label class="settings-checkbox">
+                <input type="checkbox" id="enableAutoScroll" checked />
+                <span><i class="fas fa-arrows-alt-v"></i> Rolagem automática</span>
+              </label>
+              
+              <label class="settings-checkbox">
+                <input type="checkbox" id="enableSoundEffects" />
+                <span><i class="fas fa-volume-up"></i> Efeitos sonoros</span>
+              </label>
+              
+              <label class="settings-checkbox">
+                <input type="checkbox" id="enableNotifications" checked />
+                <span><i class="fas fa-bell"></i> Notificações do sistema</span>
+              </label>
+              
+              <label class="settings-checkbox">
+                <input type="checkbox" id="enableAutoSave" checked />
+                <span><i class="fas fa-save"></i> Salvar automaticamente</span>
+              </label>
+            </div>
+            
+            <div class="settings-section">
+              <h4><i class="fas fa-database"></i> Dados</h4>
+              <button id="exportAllDataBtn" class="btn-secondary btn-block">
+                <i class="fas fa-file-export"></i>
+                Exportar Todos os Dados
+              </button>
+              <button id="importDataBtn" class="btn-secondary btn-block">
+                <i class="fas fa-file-import"></i>
+                Importar Dados
+              </button>
+              <button id="clearAllDataBtn" class="btn-danger-outline btn-block">
+                <i class="fas fa-trash"></i>
+                Limpar Todos os Dados
+              </button>
+            </div>
           </div>
         </div>
       </div>
       
-      <div class="footer-links">
-        <div class="link-group">
-          <h4>Legal</h4>
-          <a href="https://termos.orpheostudio.com.br" target="_blank">
-            <i class="fas fa-gavel"></i>
-            Termos de Uso
-          </a>
-          <a href="https://politicas.orpheostudio.com.br" target="_blank">
-            <i class="fas fa-user-shield"></i>
-            Política de Privacidade
-          </a>
-          <a href="#cookie-settings" id="cookieSettingsLink">
-            <i class="fas fa-cookie"></i>
-            Configurações de Cookies
-          </a>
-        </div>
-        <div class="link-group">
-          <h4>Projetos</h4>
-          <a href="https://instagram.com/ampla.ai" target="_blank">
-            <i class="fas fa-book"></i>
-            Escola de Autores
-          </a>
-          <a href="https://sion.orpheostudio.com.br" target="_blank">
-            <i class="fas fa-code"></i>
-            Sion AI
-          </a>
-          <a href="mailto:sac.studiotsukiyo@outlook.com">
-            <i class="fas fa-headset"></i>
-            Suporte
-          </a>
-        </div>
-        <div class="link-group">
-          <h4>AmplaAI
-          <a href="https://orpheostudio.com.br" target="_blank">
-            <i class="fas fa-building"></i>
-            Sobre nós
-          </a>
-          <a href="https://universotsukiyo.orpheostudio.com.br" target="_blank">
-            <i class="fas fa-blog"></i>
-            Universo Tsukiyo
-          </a>
-          <a href="https://instagram.com/ampla.ai" target="_blank">
-            <i class="fas fa-briefcase"></i>
-            Novidades
-          </a>
-        </div>
-      </div>
-    </div>
-    
-    <div class="footer-bottom">
-      <div class="legal-info">
-        <p>&copy; 2024 AmplaAI. Todos os direitos reservados.</p>
-        <div class="compliance-badges">
-          <span class="compliance-badge">
-            <i class="fas fa-shield-check"></i>
-            Uma marca Ren The Writer
-          </span>
-          <span class="compliance-badge">
-            <i class="fas fa-lock"></i>
-            Tecnologia que respeita sua privacidade.
-          </span>
-        </div>
-      </div>
-      <div class="social-links">
-        <a href="https://github.com/orpheostudio" target="_blank" title="GitHub">
-          <i class="fab fa-github"></i>
-        </a>
-        <a href="https://instagram.com/yumerolloficial" target="_blank" title="Instagram">
-          <i class="fab fa-instagram"></i>
-        </a>
-        <a href="https://tiktok.com/company/yumerollanimes" target="_blank" title="TikTok">
-          <i class="fab fa-tiktok"></i>
-        </a>
-        <a href="https://instagram.com/ampla.ai" target="_blank" title="Instagram">
-          <i class="fab fa-instagram"></i>
-        </a>
+      <div class="modal-footer">
+        <button id="resetSettingsBtn" class="btn-secondary">
+          <i class="fas fa-undo"></i>
+          Restaurar Padrões
+        </button>
+        <button id="saveSettingsBtn" class="btn-primary">
+          <i class="fas fa-check"></i>
+          Salvar Configurações
+        </button>
       </div>
     </div>
   </div>
-</footer>
 
-  <!-- Banner de consentimento -->
-  <div id="cookieBanner" class="cookie-banner">
+  <!-- Banner de Cookies -->
+  <div id="cookieBanner" class="cookie-banner" style="display: none;">
     <div class="cookie-content">
       <div class="cookie-icon">
         <i class="fas fa-cookie-bite"></i>
       </div>
       <div class="cookie-text">
-        <h4>Privacidade e Cookies</h4>
-        <p>Usamos cookies e tecnologias de análise para melhorar sua experiência. Ao continuar, você concorda com nossos <a href="https://termos.orpheostudio.com.br" target="_blank">Termos</a> e <a href="https://politicas.orpheostudio.com.br" target="_blank">Políticas</a>.</p>
+        <h4>🍪 Privacidade e Cookies</h4>
+        <p>Usamos cookies e tecnologias similares (incluindo Orpheo Analitics para análises) para melhorar sua experiência. Ao continuar, você concorda com nossos <a href="https://termos.orpheostudio.com.br" target="_blank">Termos de Uso</a> e <a href="https://politicas.orpheostudio.com.br" target="_blank">Políticas de Privacidade</a>.</p>
       </div>
       <div class="cookie-buttons">
-        <button id="customizeCookiesBtn" class="btn-outline">
+        <button id="customizeCookiesBtn" class="btn-secondary">
           <i class="fas fa-sliders-h"></i>
           Personalizar
         </button>
         <button id="acceptAllBtn" class="btn-primary">
           <i class="fas fa-check"></i>
-          Aceitar tudo
+          Aceitar Tudo
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Modal de personalização de cookies -->
-  <div id="cookieModal" class="cookie-modal">
-    <div class="modal-content">
+  <!-- Modal de Cookies -->
+  <div id="cookieModal" class="modal" style="display: none;">
+    <div class="modal-overlay"></div>
+    <div class="modal-content modal-cookies">
       <div class="modal-header">
         <h3>
           <i class="fas fa-sliders-h"></i>
@@ -325,43 +608,39 @@
       </div>
       
       <div class="modal-body">
-        <div class="cookie-category">
-          <div class="category-header">
+        <p class="cookie-intro">Gerenciamos cookies para garantir a melhor experiência. Escolha suas preferências abaixo.</p>
+        
+        <div class="cookie-option">
+          <div class="cookie-option-header">
             <label>
-              <input type="checkbox" id="essentialCookies" checked disabled>
-              <span class="category-title">
-                <i class="fas fa-lock"></i>
-                Cookies Essenciais
-              </span>
+              <input type="checkbox" id="essentialCookies" checked disabled />
+              <strong>🔒 Cookies Essenciais</strong>
+              <span class="cookie-badge required">Obrigatório</span>
             </label>
           </div>
-          <p class="category-description">Necessários para o funcionamento básico do site. Não podem ser desativados.</p>
+          <p>Necessários para o funcionamento básico do site. Não podem ser desativados.</p>
         </div>
 
-        <div class="cookie-category">
-          <div class="category-header">
+        <div class="cookie-option">
+          <div class="cookie-option-header">
             <label>
-              <input type="checkbox" id="analyticsCookies" checked>
-              <span class="category-title">
-                <i class="fas fa-chart-bar"></i>
-                Cookies Analíticos
-              </span>
+              <input type="checkbox" id="analyticsCookies" checked />
+              <strong>📊 Cookies Analíticos (Orpheo Analitics)</strong>
+              <span class="cookie-badge optional">Opcional</span>
             </label>
           </div>
-          <p class="category-description">Nos ajudam a entender como você usa o site e melhorar sua experiência.</p>
+          <p>Nos ajudam a entender como você usa o site através do Orpheo Analitics e melhorar sua experiência.</p>
         </div>
 
-        <div class="cookie-category">
-          <div class="category-header">
+        <div class="cookie-option">
+          <div class="cookie-option-header">
             <label>
-              <input type="checkbox" id="adsCookies" checked>
-              <span class="category-title">
-                <i class="fas fa-ad"></i>
-                Cookies de Publicidade
-              </span>
+              <input type="checkbox" id="adsCookies" />
+              <strong>💰 Cookies de Publicidade (Google AdSense)</strong>
+              <span class="cookie-badge optional">Opcional</span>
             </label>
           </div>
-          <p class="category-description">Usados para exibir anúncios relevantes e medir o desempenho de campanhas.</p>
+          <p>Usados para exibir anúncios relevantes através do Google AdSense e medir o desempenho de campanhas.</p>
         </div>
       </div>
       
@@ -370,11 +649,11 @@
           <i class="fas fa-times"></i>
           Rejeitar Todos
         </button>
-        <button id="saveCookiePrefs" class="btn-primary">
+        <button id="saveCookiePrefs" class="btn-secondary">
           <i class="fas fa-save"></i>
           Salvar Preferências
         </button>
-        <button id="acceptAllModal" class="btn-success">
+        <button id="acceptAllModal" class="btn-primary">
           <i class="fas fa-check"></i>
           Aceitar Todos
         </button>
@@ -382,48 +661,32 @@
     </div>
   </div>
 
-  <!-- Modal de configurações -->
-  <div id="settingsModal" class="settings-modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3><i class="fas fa-cog"></i> Configurações</h3>
-        <button class="modal-close" id="settingsModalClose">
-          <i class="fas fa-times"></i>
-        </button>
+  <!-- Área de Notificações -->
+  <div id="notificationArea" class="notification-container"></div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="https://termos.orpheostudio.com.br" target="_blank">Termos de Uso</a>
+        <span>•</span>
+        <a href="https://politicas.orpheostudio.com.br" target="_blank">Políticas de Privacidade</a>
+        <span>•</span>
+        <a href="#" id="aboutBtn">Sobre</a>
+        <span>•</span>
+        <span class="footer-version">v1.0.0</span>
       </div>
-      <div class="modal-body">
-        <div class="setting-group">
-          <label>Modelo de IA</label>
-          <select id="modelSelect">
-            <option value="mistral-small-latest">Sena Small (Rápido)</option>
-            <option value="mistral-medium-latest">Sena Medium (Balanceado)</option>
-            <option value="mistral-large-latest">Sena Large (Avançado)</option>
-          </select>
-        </div>
-        <div class="setting-group">
-          <label>Temperatura (Criatividade)</label>
-          <input type="range" id="temperatureSlider" min="0" max="1" step="0.1" value="0.7">
-          <span id="temperatureValue">0.7</span>
-        </div>
-        <div class="setting-group">
-          <label>
-            <input type="checkbox" id="soundEffects" checked>
-            Efeitos sonoros
-          </label>
-        </div>
-        <div class="setting-group">
-          <label>
-            <input type="checkbox" id="autoScroll" checked>
-            Rolagem automática
-          </label>
-        </div>
-      </div>
+      <p class="footer-copyright">
+        Desenvolvido com <i class="fas fa-heart"></i> por <strong>AmplaAI</strong>
+      </p>
+      <p class="footer-warning">
+        <i class="fas fa-info-circle"></i>
+        Sena pode cometer erros. Considere verificar informações importantes.
+      </p>
     </div>
-  </div>
+  </footer>
 
-  <!-- Notificações -->
-  <div id="notificationArea" class="notification-area"></div>
-
+  <!-- Scripts -->
   <script src="script.js"></script>
 </body>
 </html>
