@@ -1341,7 +1341,7 @@ function showAbout() {
       <div style="width: 80px; height: 80px; margin: 0 auto 20px; background: var(--gradient-primary); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 2rem;">
         <i class="fas fa-robot"></i>
       </div>
-      <h2>Aura AI Assistant</h2>
+      <h2>Sena AI Assistant</h2>
       <p style="color: var(--text-secondary); margin: 16px 0;">Versão 1.0.0</p>
       <p style="line-height: 1.6; margin-bottom: 20px;">
         Desenvolvido com ❤️ pela <strong>AmplaAI</strong><br>
